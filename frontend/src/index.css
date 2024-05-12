@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&family=Poppins:wght@100;200;400;700&family=Roboto:wght@100;400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  height: 100vh;
+  max-height: -webkit-fill-available;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.text-textGray {
+  --tw-text-opacity: 1;
+  color: rgb(160 160 160 / var(--tw-text-opacity));
+}
+
+.text-main {
+  --tw-text-opacity: 1;
+  color: rgb(24 50 83 / var(--tw-text-opacity));
+}
+
+.text-subMain {
+  --tw-text-opacity: 1;
+  color: rgb(102 181 163 / var(--tw-text-opacity));
+}
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.bg-subMain {
+  /* --tw-bg-opacity: 1;
+  background-color: rgb(102 181 163 / var(--tw-bg-opacity));
+   */
+  background-color: rgb(102 181 163);
+}
+.flex-btn {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.bg-dry {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 250 / var(--tw-bg-opacity));
+}
+.border-border {
+  --tw-border-opacity: 1;
+  border-color: rgb(232 235 238 / var(--tw-border-opacity));
+}
+.border {
+  border-width: 1px;
+}
+.text-main {
+  --tw-text-opacity: 1;
+  color: rgb(24 50 83 / var(--tw-text-opacity));
+}
+
+.btn-danger {
+  @apply w-full flex-rows gap-4 hover:opacity-80   bg-red-500 text-white text-sm font-medium px-2 py-6 rounded;
+}
+.btn-save {
+  @apply w-full flex-rows gap-4 hover:opacity-80  bg-subMain text-white text-sm font-medium px-2 py-6 rounded-md;
+}
+[data-aos][data-aos][data-aos-delay="100"].aos-animate,
+body[data-aos-delay="100"] [data-aos].aos-animate {
+  transition-delay: 0.1s;
+}
+[data-aos^="fade"][data-aos^="fade"].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+[data-aos][data-aos][data-aos-duration="1000"],
+body[data-aos-duration="1000"] [data-aos] {
+  transition-duration: 1s;
+}
+[data-aos][data-aos][data-aos-delay="100"],
+body[data-aos-delay="100"] [data-aos] {
+  transition-delay: 0;
+}
+[data-aos][data-aos][data-aos-easing="ease"],
+body[data-aos-easing="ease"] [data-aos] {
+  transition-timing-function: ease;
+}
+[data-aos][data-aos][data-aos-duration="400"],
+body[data-aos-duration="400"] [data-aos] {
+  transition-duration: 0.4s;
+}
+[data-aos^="fade"][data-aos^="fade"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos="fade-right"] {
+  transform: translate3d(-100px, 0, 0);
+}
+
+.bg-text {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 250 248 / var(--tw-bg-opacity));
+}
+
+.flex-colo,
+.flex-rows {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.flex-colo {
+  flex-direction: column;
+}
+.flex-rows {
+  flex-direction: row;
+}
+.toggle {
+  @apply bg-primary py-2 px-8 text-base font-semibold cursor-pointer rounded font-poppins;
+}
+
+.notToggle {
+  @apply py-2 px-8 text-base font-poppins font-medium text-primary cursor-pointer rounded;
+}
+
+.input {
+  @apply font-poppins px-3 py-2 bg-bgsecondary rounded outline-none;
+}
+/* .input {
+  @apply font-poppins px-3 py-2 bg-bgsecondary rounded outline-none;
+} */
+
+.step-item {
+  @apply relative flex flex-col justify-center items-center w-36;
+}
+
+.step-item {
+  @apply relative flex flex-col justify-center items-center w-36;
+}
+.step-item:not(:first-child):before {
+  @apply content-[''] bg-slate-200 absolute w-full h-[3px] right-2/4 top-1/3 -translate-y-2/4;
+}
+.step {
+  @apply w-10 h-10 flex items-center justify-center z-10 relative bg-slate-700 rounded-full font-semibold text-white;
+}
+.active .step {
+  @apply bg-sky-600;
+}
+.complete .step {
+  @apply bg-green-600;
+}
+.complete p {
+  @apply text-white;
+}
+.complete:not(:first-child):before,
+.active:not(:first-child):before {
+  @apply bg-green-600;
+}
