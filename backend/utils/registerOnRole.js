@@ -114,7 +114,7 @@ async function registerDoctor(param) {
     "Specialization",
     "Experience",
     "Checkupstatus",
-    "Consulationfee",
+    "ConsultationFee",
     "HospitalID"
   ];
   checkRequiredParams(param, requiredParams);
@@ -134,7 +134,7 @@ async function registerDoctor(param) {
     param.Specialization,
     param.Experience,
     param.Checkupstatus,
-    param.Consulationfee,
+    param.ConsultationFee,
     param?.["HospitalID"],
   );
 }

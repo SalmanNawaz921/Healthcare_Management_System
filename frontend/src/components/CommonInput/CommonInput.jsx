@@ -164,6 +164,11 @@ const CommonInput = ({
         );
 
       case "date":
+        if (name !== "AppointmentDate") {
+          return (
+            <DatePicker {...rest} onChange={setChange} format="YYYY-MM-DD" />
+          );
+        }
         return (
           <DatePicker
             {...rest}

@@ -74,11 +74,11 @@ export const hospitalAdminApi = hmsApi.injectEndpoints({
       }),
     }),
     getDepartments: builder.query({
-      query: (params) => ({
-        url: `/hospitaladmin/viewDepartments/${params.id}`,
+      query: (authToken) => ({
+        url: `/hospitaladmin/viewDepartments`,
         method: "GET",
         headers: {
-          "auth-token": `${params.authToken}`,
+          "auth-token": `${authToken}`,
         },
       }),
     }),

@@ -6,7 +6,7 @@ import { useDepartmentCrud } from "@/hooks/useDepartmentCrud";
 
 const DepartmentTable = () => {
   const authToken = localStorage.getItem("Hospital Admintoken");
-  const { data, isLoading, error } = useGetDepartmentsQuery({authToken});
+  const { data, isLoading, error } = useGetDepartmentsQuery(authToken);
   const { add, edit, remove } = useDepartmentCrud();
   const items = [
     { key: 1, label: "View", icon: <EyeOutlined /> },

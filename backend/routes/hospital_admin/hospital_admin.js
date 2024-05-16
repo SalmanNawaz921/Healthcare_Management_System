@@ -53,7 +53,7 @@ route.post(
   requireAuth("hospitalAdmin"),
   insertDepartmentDetails
 );
-route.get("/viewDepartments/:id", requireAuth(["hospitalAdmin","admin"]), view_departments);
+route.get("/viewDepartments", requireAuth(["hospitalAdmin","admin"]), view_departments);
 route.put("/editDepartment/:id", requireAuth("hospitalAdmin"), edit_department);
 route.delete("/deleteDepartment/:id", requireAuth("admin"), delete_department);
 route.get("/getDepartment/:id", requireAuth("hospitalAdmin"), view_department_details);

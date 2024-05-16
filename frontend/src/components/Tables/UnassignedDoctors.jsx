@@ -16,7 +16,7 @@ const TreatmentTableForAdmin = ({ items }) => {
     isLoading: loading,
     error,
   } = useGetUnassignedDoctorsQuery(authToken);
-  const { data: departmentData } = useGetDepartmentsQuery(authToken);
+  const { data: departmentData } = useGetDepartmentsQuery({authToken});
   const [edit, { isSuccess: isEditSuccess }] = useAssignDoctorMutation();
   const [doctorsData, setDoctorsData] = useState([]);
   const [columnsData, setColumnsData] = useState([]);

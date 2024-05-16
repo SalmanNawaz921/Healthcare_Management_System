@@ -117,54 +117,65 @@ export const userComponents = {
   patient: Patient,
 };
 
-export const doctorInputs = [
-  {
-    value: 1,
-    label: "Qualification",
-    name: "Qualification",
-    type: "select",
-    validationfn: "",
-    require: true,
-    options: [
-      { label: "MBBS", value: "MBBS" },
-      { label: "MD", value: "MD" },
-      { label: "DO", value: "DO" },
-      { label: "BDS", value: "BDS" },
-    ],
-  },
-  {
-    value: 2,
-    label: "Specialization",
-    name: "Specialization",
-    type: "select",
-    validationfn: "",
-    require: true,
-  },
-  {
-    value: 3,
-    label: "Experience",
-    name: "Experience",
-    type: "text",
-    validationfn: validateExperience,
-    require: true,
-  },
-  {
-    value: 4,
-    label: "Checkupstatus",
-    name: "Checkupstatus",
-    type: "radio",
-    validationfn: "",
-    require: true,
-  },
-  {
-    value: 5,
-    label: "ConsultationFee",
-    name: "ConsultationFee",
-    type: "number",
-    validationfn: "",
-    require: true,
-  },
-];
+export const doctorInputs = (options) => {
+  return[
+    {
+      value: 1,
+      label: "Qualification",
+      name: "Qualification",
+      type: "select",
+      validationfn: "",
+      require: true,
+      options: [
+        { label: "MBBS", value: "MBBS" },
+        { label: "MD", value: "MD" },
+        { label: "DO", value: "DO" },
+        { label: "BDS", value: "BDS" },
+      ],
+    },
+    {
+      value: 2,
+      label: "Specialization",
+      name: "Specialization",
+      type: "select",
+      validationfn: "",
+      require: true,
+    },
+    {
+      value: 3,
+      label: "Experience",
+      name: "Experience",
+      type: "text",
+      validationfn: validateExperience,
+      require: true,
+    },
+    {
+      value: 4,
+      label: "Checkupstatus",
+      name: "Checkupstatus",
+      type: "radio",
+      validationfn: "",
+      require: true,
+    },
+    {
+      value: 5,
+      label: "ConsultationFee",
+      name: "ConsultationFee",
+      type: "number",
+      validationfn: "",
+      require: true,
+    },
+    {
+      value: 6,
+      label: "Hospital Name",
+      name: "HospitalID",
+      type: "select",
+      validationfn: "",
+      require: true,
+      options:options
+    },
+  ];
+};
 
 export const qualificationSpecializations = [
   {
@@ -818,7 +829,7 @@ export const assignDoctor = (options) => {
     name: "DepartmentID",
     require: true,
     validationfn: "",
-    options:options
+    options: options,
   };
 };
 export const medicineCards = [

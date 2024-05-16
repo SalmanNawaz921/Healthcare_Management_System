@@ -199,7 +199,7 @@ const Doctor = {
     transaction
   ) {
     try {
-      const query = `INSERT INTO Doctor (HospitalID,Qualification,Specialization,Experience,CheckupStatus,ConsultationFee,DoctorID) VALUES (hospitalID,@qualification,@specialization,@experience,@checkupstatus,@consulationfee,@doctorId)`;
+      const query = `INSERT INTO Doctor (HospitalID,Qualification,Specialization,Experience,CheckupStatus,ConsultationFee,DoctorID) VALUES (@hospitalID,@qualification,@specialization,@experience,@checkupstatus,@consulationfee,@doctorId)`;
       const parameters = [
         { name: "qualification", type: sql.VarChar, value: qualification },
         { name: "specialization", type: sql.VarChar, value: specialization },

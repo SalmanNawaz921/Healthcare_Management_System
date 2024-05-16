@@ -6,15 +6,18 @@ import {
 import { getSpecializations } from "@/utils/utils";
 import { useState } from "react";
 import CommonInput from "../CommonInput/CommonInput";
+import { useViewHospitalsQuery } from "@/redux/services/api/hospitalApi";
 const DoctorInfo = ({ data, handleChange }) => {
+  const {data:details}=useViewHospitalsQuery();
+  const someOpts=details?.map((item)=>({label:item.Name,value:item.HospitalID}))
   const [qualification, setQualification] = useState(
     qualificationSpecializations[0].qualification
   );
-
+  
   const handleQualificationChange = (value) => {
     setQualification(value);
   };
-
+  
   const handleInputChange = (name, value) => {
     handleChange(name, value);
     if (name === "Qualification") {
@@ -23,7 +26,7 @@ const DoctorInfo = ({ data, handleChange }) => {
   };
   return (
     <div>
-      {doctorInputs.map((input) => {
+      {doctorInputs(someOpts).map((input) => {
         const options =
           input.label === "Qualification"
             ? qualificationSpecializations
@@ -37,7 +40,7 @@ const DoctorInfo = ({ data, handleChange }) => {
             name={input.name}
             type={input.type}
             validationFn={input.validationfn}
-            options={options}
+            options={input.name==="HospitalID"?someOpts:options}
             value={data?.[input.label]}
             data={data}
             handleChange={handleInputChange}
