@@ -1,18 +1,11 @@
-import roleContext from "@/context/RoleContext/roleContext";
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
-import GeneralTable from "./GeneralTable";
-import { Tag, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 import GenTable from "./GenTable";
 import { sortData } from "@/utils/utils";
-import { EyeOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { EyeOutlined, DeleteOutlined} from "@ant-design/icons";
 import DoctorCards from "../Card/DoctorCards";
-import { useAddAppointmentMutation } from "@/redux/services/api/appointmentApi";
 import { useDeleteDoctorMutation } from "@/redux/services/api/hospitalAdminApi";
 
 const DoctorTable = ({ details, loading, error, authToken, type, purpose }) => {
-  //   const options = details?.map((details, i) => details?.["HospitalID"]);
   const [deleteDoctor, { isSuccess, isLoading, error: deletionError }] =
     useDeleteDoctorMutation(localStorage.getItem("Hospital Admintoken"));
   const items = [

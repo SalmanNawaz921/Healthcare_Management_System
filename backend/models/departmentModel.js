@@ -14,7 +14,6 @@ const Department = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Department", err);
       throw err;
     }
   },
@@ -25,7 +24,6 @@ const Department = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Department", err);
       throw err;
     }
   },
@@ -36,7 +34,6 @@ const Department = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Departments", error);
       throw error;
     }
   },
@@ -48,7 +45,6 @@ const Department = {
       const result = await executeQuery(query, parameters);
       return result;
     } catch (error) {
-      console.log("Error finding Departments Earnings", error);
       throw error;
     }
   },
@@ -69,7 +65,6 @@ const Department = {
       // const hospitalID=await this.findHospitalID()
       return result;
     } catch (error) {
-      console.log("Error adding department", error);
       await transaction.rollback();
       throw error;
     }
@@ -85,7 +80,6 @@ const Department = {
       parameters.push({ name: "id", type: sql.Int, value: id });
       await executeQuery(query, parameters, transaction);
       const hospitalId = await this.findById(id, transaction);
-      console.log(hospitalId);
       const result = await this.getAllDepartments(
         hospitalId?.["HospitalID"],
         transaction
@@ -93,7 +87,6 @@ const Department = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing department", error);
       await transaction.rollback();
       throw error;
     }
@@ -104,97 +97,81 @@ const Department = {
       const query = `DELETE FROM Department WHERE HospitalID = @id`;
       const parameters = [{ name: "id", type: sql.Int, value: id }];
       await executeQuery(query, parameters, transaction);
-      console.log("reached");
       return (success = true);
     } catch (error) {
-      console.log("Error deleteing hospital", error);
       return false;
     }
   },
 
-  // async deleteDepartment(id) {
-  //   const pool = await getData();
-  //   const transaction = pool.transaction();
-  //     try {
-  //       await transaction.begin();
-  //       let query, parameters, result;
-  //       query = `DELETE DoctorDepartmentAssignment WHERE DepartmentID = @id`;
-  //       parameters = [{ name: "id", type: sql.Int, value: id }];
-  //       await executeQuery(query, parameters);
-  //       query = `DELETE Treatment  WHERE DepartmentID = @id`;
-  //       parameters = [{ name: "id", type: sql.Int, value: id }];
-  //       await executeQuery(query, parameters);
-  //       query = `DELETE Department WHERE DepartmentID = @id`;
-  //       parameters = [{ name: "id", type: sql.Int, value: id }];
-  //       await executeQuery(query, parameters);
-  //       result = await this.getAllDepartments();
-  //       return result;
-
-  //   } catch (error) {
-  //     console.log("Error deleting Department", error);
-  //     return false;
-  //   }
-  // },
+ 
 
   async deletePrescriptionsAndInvoices(transaction, treatmentId) {
     try {
       // Delete prescriptions associated with the treatment
       // Delete invoices associated with the prescriptions
-      const queryPatientMedicines=`DELETE FROM PatientMedicine WHERE PrescriptionID IN (SELECT PrescriptionID FROM Prescription WHERE TreatmentID = @treatmentId)`;
+      const queryPatientMedicines = `DELETE FROM PatientMedicine WHERE PrescriptionID IN (SELECT PrescriptionID FROM Prescription WHERE TreatmentID = @treatmentId)`;
       const parametersPrescriptions = [
         { name: "treatmentId", type: sql.Int, value: treatmentId },
       ];
-      await executeQuery(queryPatientMedicines, parametersPrescriptions,transaction);
+      await executeQuery(
+        queryPatientMedicines,
+        parametersPrescriptions,
+        transaction
+      );
       const queryInvoices = `DELETE FROM Invoice WHERE InvoiceID IN (SELECT PrescriptionID FROM Prescription WHERE TreatmentID = @treatmentId)`;
-      await executeQuery(queryInvoices, parametersPrescriptions,transaction);
+      await executeQuery(queryInvoices, parametersPrescriptions, transaction);
 
       const queryPrescriptions = `DELETE FROM Prescription WHERE TreatmentID = @treatmentId`;
-      await executeQuery(queryPrescriptions, parametersPrescriptions,transaction);
-
+      await executeQuery(
+        queryPrescriptions,
+        parametersPrescriptions,
+        transaction
+      );
     } catch (error) {
-      console.log("Error deleting prescriptions and invoices", error);
       throw error;
     }
   },
 
-  async deleteDepartment(id,adminID) {
+  async deleteDepartment(id, adminID) {
     const pool = await getData();
     const transaction = pool.transaction();
     try {
       await transaction.begin();
       let query, parameters, result;
-      
+
       // Get the treatments associated with the department
       query = `SELECT TreatmentID FROM Treatment WHERE DepartmentID = @id`;
       parameters = [{ name: "id", type: sql.Int, value: id }];
-      const treatments = await executeQuery(query, parameters,transaction);
+      const treatments = await executeQuery(query, parameters, transaction);
 
       // Delete DoctorDepartmentAssignment
       query = `DELETE DoctorDepartmentAssignment WHERE DepartmentID = @id`;
-      await executeQuery(query, parameters,transaction);
+      await executeQuery(query, parameters, transaction);
 
       // Delete prescriptions and associated invoices for each treatment
       for (const { TreatmentID } of treatments) {
-        await this.deletePrescriptionsAndInvoices(transaction, TreatmentID,transaction);
+        await this.deletePrescriptionsAndInvoices(
+          transaction,
+          TreatmentID,
+          transaction
+        );
       }
 
       // Delete treatments
       query = `DELETE FROM Treatment WHERE DepartmentID = @id`;
-      await executeQuery(query, parameters,transaction);
+      await executeQuery(query, parameters, transaction);
 
       // Delete department
       query = `DELETE FROM Department WHERE DepartmentID = @id`;
-      await executeQuery(query, parameters,transaction);
+      await executeQuery(query, parameters, transaction);
 
       // Commit transaction
-      result = await this.getAllDepartments(adminID,transaction);
-      console.log(result);
+      result = await this.getAllDepartments(adminID, transaction);
       await transaction.commit();
 
       // Return updated departments
       return result;
     } catch (error) {
-      console.log("Error deleting Department", error);
       // Rollback transaction in case of error
       await transaction.rollback();
       return false;

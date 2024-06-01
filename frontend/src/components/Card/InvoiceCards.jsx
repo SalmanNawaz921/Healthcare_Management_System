@@ -1,20 +1,7 @@
-import React from "react";
 import StyledCard from "./Card";
-import {
-  useGetDoctorsEarningsQuery,
-  useGetDoctorsQuery,
-  useGetInvoicesQuery,
-} from "@/redux/services/api/hospitalAdminApi";
-import {
-  appointmentCards,
-  doctorCards,
-  invoiceCards,
-} from "@/constants/constants";
-import { useAppointmentCrud } from "@/hooks/useAppointmentCrud";
+import { invoiceCards } from "@/constants/constants";
 
-const InvoiceCards = ({data,authToken}) => {
-
-
+const InvoiceCards = ({ data, authToken }) => {
   const arr = [
     data?.length,
     data?.filter((d) => d.Status === "Unpaid").length,

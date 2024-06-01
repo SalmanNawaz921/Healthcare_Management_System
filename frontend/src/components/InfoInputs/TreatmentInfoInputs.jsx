@@ -1,4 +1,4 @@
-import { hospitalInputs, treatmentAttributes } from "@/constants/constants";
+import {treatmentAttributes } from "@/constants/constants";
 import React from "react";
 import CommonInput from "../CommonInput/CommonInput";
 import { useGetDepartmentsQuery } from "@/redux/services/api/hospitalAdminApi";
@@ -9,7 +9,6 @@ const TreatmentInfoInputs = ({ data, handleChange }) => {
   const treatmentInputs = treatmentAttributes(options);
   return (
     <div className="grid grid-cols-2 gap-2">
-      {console.log(options)}
       {treatmentInputs.map((input, i) => (
         <CommonInput
           key={i}

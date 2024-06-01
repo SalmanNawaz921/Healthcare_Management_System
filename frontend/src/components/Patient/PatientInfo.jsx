@@ -1,7 +1,5 @@
-import { personalInfoInputs } from "@/constants/constants";
 import React from "react";
 import CommonInput from "../CommonInput/CommonInput";
-import { Form } from "antd";
 import { petientInfoInputs } from "@/constants/constants";
 import { useViewHospitalsQuery } from "@/redux/services/api/hospitalApi";
 

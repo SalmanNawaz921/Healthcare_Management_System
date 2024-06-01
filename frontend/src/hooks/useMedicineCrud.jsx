@@ -40,7 +40,6 @@ export const useMedicineCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Medicine not added");
     }
   };
@@ -58,7 +57,6 @@ export const useMedicineCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Medicine not edited");
     }
   };
@@ -73,7 +71,6 @@ export const useMedicineCrud = (steps) => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Medicine");
       }
     }

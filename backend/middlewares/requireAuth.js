@@ -46,7 +46,6 @@ const requireAuth = (userTypes) => async (req, res, next) => {
 
     return res.status(401).send({ error: "User not authorized!" });
   } catch (err) {
-    console.error(err);
     return res.status(401).send({ error: "Authentication failed!" });
   }
 };

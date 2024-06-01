@@ -2,18 +2,7 @@ import {
   doctorInputs,
   personalInfoInputs,
   petientInfoInputs,
-  userInfoInputs,
 } from "@/constants/constants";
-import { message } from "antd";
-import { useState } from "react";
-import PersonalInfo from "../SignUp/PersonalInfo";
-import UserInfo from "../SignUp/UserInfo";
-import DoctorInfo from "../Doctor/DoctorInfo";
-import { useContext } from "react";
-import roleContext from "@/context/RoleContext/roleContext";
-import PatientInfo from "../Patient/PatientInfo";
-import DoctorTable from "../Tables/DoctorTable";
-
 const DetailsComponent = ({
   data,
   type,
@@ -22,7 +11,6 @@ const DetailsComponent = ({
   details,
   Component,
 }) => {
-  // const {data:doctorsData}=useGetDoct(credentaiols)
   const divComponent = () => {
     return (
       <div className="">
@@ -57,7 +45,7 @@ const DetailsComponent = ({
                   )
               )}
             {type === "Doctor Information" &&
-              doctorInputs?.map(
+              doctorInputs(null)?.map(
                 (input, i) =>
                   details?.[input.label] && (
                     <div key={i} className="text-lg font-poppins mb-5">
@@ -78,7 +66,6 @@ const DetailsComponent = ({
 
   return (
     <div>
-      {console.log(details)}
       <div className="">{divComponent()}</div>
     </div>
   );

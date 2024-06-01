@@ -175,8 +175,8 @@ const CommonInput = ({
             onChange={setChange}
             format="YYYY-MM-DD HH:mm:ss"
             disabledDate={disabledDate}
-            disabledTime={disabledDateTime}
-            showTime={{
+            // disabledTime={disabledDateTime}
+            showTime={{  
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
           />

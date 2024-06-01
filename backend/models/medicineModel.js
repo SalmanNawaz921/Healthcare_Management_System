@@ -14,7 +14,6 @@ const Medicine = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Medicine", err);
       throw err;
     }
   },
@@ -51,7 +50,6 @@ const Medicine = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error adding Medicine", error);
       await transaction.rollback();
       throw error;
     }
@@ -69,7 +67,6 @@ const Medicine = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing Medicine", error);
       await transaction.rollback();
       throw error;
     }
@@ -90,7 +87,6 @@ const Medicine = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error deleting Medicine", error);
       await transaction.rollback();
       throw error;
     }

@@ -1,14 +1,7 @@
-import { Avatar, Layout, Space } from "antd";
-import { FaTrashAlt, FaUserAlt, FaUserEdit } from "react-icons/fa";
-import { TiEdit } from "react-icons/ti";
-import { UserOutlined } from "@ant-design/icons";
-
-import PersonalInfo from "../SignUp/PersonalInfo";
-import DragUpload from "../Form/DragUpload";
-const { Header, Sider, Content } = Layout;
+import { Layout } from "antd";
+const { Content } = Layout;
 const DetailsWrapper = ({ LeftComponent, RightComponent }) => {
   return (
-    // <Layout className="flex flex-row  justify-between gap-8">
     <Layout className="flex flex-row  justify-between gap-8">
       <div
         style={{

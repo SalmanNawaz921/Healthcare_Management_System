@@ -6,21 +6,6 @@ import InvoiceCards from "../Card/InvoiceCards";
 import { message } from "antd";
 import { usePayInvoiceMutation } from "@/redux/services/api/patientApi";
 const InvoiceTable = ({ data, error, isLoading, authToken, type }) => {
-  // details,
-  // handleEdit,
-  // handleAdd,
-  // handleDelete,
-  // options,
-  // tableTitle,
-  // page,
-  // keyToDelete,
-  // keyToSearch,
-  // handleSort,
-  // handleFilter,
-  // items,
-  // handleClick,
-  // authToken,
-
   const items = [
     type === "admin"
       ? { key: 3, label: "Delete", icon: <DeleteOutlined /> }
@@ -73,7 +58,6 @@ const InvoiceTable = ({ data, error, isLoading, authToken, type }) => {
       const result = await deleteInvoice({ authToken, id });
       if (result?.data) {
         message.success("Invoice deleted successfully");
-        console.log(result?.data);
         return result?.data;
       }
       message.error("Error: Invoice cannot be deleted");
@@ -81,8 +65,6 @@ const InvoiceTable = ({ data, error, isLoading, authToken, type }) => {
       const result = await payInvoice({ authToken:localStorage.getItem("Patienttoken"), id });
       if (result?.data) {
         message.success("Invoice paid successfully");
-        // console.log(result?.data);
-        // return result?.data;
       }
       else{
         message.error("Error: Invoice cannot be paid");
@@ -90,7 +72,6 @@ const InvoiceTable = ({ data, error, isLoading, authToken, type }) => {
       }
     }
   };
-  // const payInvoice
 
   const tableProps = {
     details: data || null,

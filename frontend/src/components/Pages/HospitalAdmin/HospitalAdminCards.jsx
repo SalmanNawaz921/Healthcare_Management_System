@@ -1,6 +1,4 @@
 import ChartCard from "@/components/ChartCard/ChartCard";
-import { useAppointmentCrud } from "@/hooks/useAppointmentCrud";
-import { usePrescriptionCrud } from "@/hooks/usePrescriptionCrud";
 import { useGetAppointmentsQuery } from "@/redux/services/api/appointmentApi";
 import {
   useGetDepartmentEarningsQuery,

@@ -11,7 +11,6 @@ const HospitalAdmin = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding hospital", err);
       throw err;
     }
   },
@@ -22,7 +21,6 @@ const HospitalAdmin = {
       const result = await executeQuery(query, parameters);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding hospital", err);
       throw err;
     }
   },
@@ -34,12 +32,10 @@ const HospitalAdmin = {
     return result;
   },
   async getHospitalAdminDetails(id) {
-    console.log(id);
     const query =
       "SELECT Admin.AdminID, Admin.OfficeLocation, Admin.JoinDate, Admin.Salary, Admin.Notes, Person.FirstName, Person.LastName, Lookup.Value As Gender, Person.Address, Person.CNIC, Person.Contact, Person.Email, Person.DateOfBirth, Person.ZipCode, Person.State,Person.Img, Person.City,Person.Country,Users.Username,Hospital.HospitalID, Hospital.Name AS HospitalName, Hospital.Location AS HospitalLocation, Hospital.Website FROM Admin JOIN Person ON Admin.AdminID = Person.UserID JOIN Users ON Admin.AdminID = Users.UserID JOIN Lookup ON Lookup.Id = Person.Gender JOIN Hospital ON Hospital.AdminID = Admin.AdminID WHERE Admin.AdminID = @id;";
     const parameters = [{ name: "id", type: sql.Int, value: id }];
     const result = await executeQuery(query, parameters);
-    console.log(result);
     return result != null && result.length > 0 ? result[0] : null;
   },
 };

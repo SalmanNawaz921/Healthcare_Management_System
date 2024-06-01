@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Drawer, Layout, Menu, theme } from "antd";
+import { Drawer, Layout } from "antd";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "../Navbar/Navbar";
 import { useParams } from "react-router-dom";
@@ -7,12 +7,11 @@ const { Header, Sider, Content } = Layout;
 
 const PageWrapper = ({
   SidebarComponent,
-  HeaderComponent,
   SectionComponent,
   componentName,
 }) => {
   let mobile = useMediaQuery({ query: "(max-width: 1200px)" });
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(!mobile?true:false);
   const { username } = useParams();
   return (
     <Layout className=" min-h-screen ">
@@ -24,7 +23,7 @@ const PageWrapper = ({
           }}
           width={275}
         >
-          <SidebarComponent />
+          <SidebarComponent/>
         </Sider>
       )}
       {mobile && (
@@ -40,7 +39,7 @@ const PageWrapper = ({
           placement="left"
           onClose={() => setMenuOpen(false)}
         >
-          <SidebarComponent />
+          <SidebarComponent setMenuOpen={setMenuOpen}/>
         </Drawer>
       )}
       <Layout className="">

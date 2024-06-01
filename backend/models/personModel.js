@@ -11,7 +11,6 @@ const Person = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.error("Error finding person:", err);
       throw err; // Optionally rethrow the error to be handled by the caller
     }
   },
@@ -22,7 +21,6 @@ const Person = {
       const result = await executeQuery(query, parameters);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.error("Error finding person:", err);
       throw err; // Optionally rethrow the error to be handled by the caller
     }
   },
@@ -47,13 +45,10 @@ const Person = {
         { name: "userid", type: sql.Int, value: userid },
       ];
 
-      // console.log(parameters);
       await executeQuery(query, parameters, transaction);
       const result = await this.findById(userid, transaction);
-      console.log(result);
       return result;
     } catch (error) {
-      console.log("Error inserting person into database", error);
       throw error;
     }
   },
@@ -66,13 +61,11 @@ const Person = {
       const query = `UPDATE Person SET FirstName = COALESCE(@firstname,FirstName), LastName = COALESCE(@lastname,LastName), Email = COALESCE(@email,Email), DateOfBirth = COALESCE(@dateofbirth,DateOfBirth), Address = COALESCE(@address,Address), Gender =COALESCE(@gender,Gender),Contact=COALESCE(@contact,Contact), ZipCode = COALESCE(@zipcode,ZipCode),City=COALESCE(@city,City), State=COALESCE(@state,State), Country=COALESCE(@country,Country) Where UserID = @userID`;
       const parameters = personAttributes(params, UserID);
 
-      // console.log(parameters);
       await executeQuery(query, parameters, transaction);
       const result = await this.findById(UserID, transaction);
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error updating person", error);
       await transaction.rollback();
       throw error;
     }

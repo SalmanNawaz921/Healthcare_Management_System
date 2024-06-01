@@ -69,8 +69,7 @@ const Stepper = () => {
         throw new Error(result.error.data.msg);
       }
     } catch (error) {
-      console.error("Form validation failed:", error.message);
-      message.error("Error: " + error.message);
+      message.error("Error: " + "User cannot be registered");
     }
   };
 
@@ -82,7 +81,6 @@ const Stepper = () => {
         handleSignUp();
       }
     } catch (error) {
-      console.error("Form validation failed:", error);
     }
   };
 

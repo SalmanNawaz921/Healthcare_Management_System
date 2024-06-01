@@ -37,11 +37,9 @@ export const useTreatmentCrud = (steps) => {
       else throw new Error("User is not authenticated");
       if (isAddSuccess || !result.error) {
         message.success("Treatment added successfully");
-        // setModalOpen(false);
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Treatment not added");
     }
   };
@@ -59,11 +57,9 @@ export const useTreatmentCrud = (steps) => {
       else throw new Error("User is not authenticated");
       if (isEditSuccess || !result.error) {
         message.success("Treatment edited successfully");
-        // setModalOpen(false);
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Treatment not edited");
     }
   };
@@ -78,7 +74,6 @@ export const useTreatmentCrud = (steps) => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Treatment");
       }
     }

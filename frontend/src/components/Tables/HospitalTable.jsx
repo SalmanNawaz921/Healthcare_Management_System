@@ -1,17 +1,11 @@
-import roleContext from "@/context/RoleContext/roleContext";
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHospitalCrud } from "@/hooks/useHospitalCrud";
-import GeneralTable from "./GeneralTable";
 import HospitalCards from "../Card/HospitalCards";
 import GenTable from "./GenTable";
 
 const HospitalTable = ({ items }) => {
   const { add, edit, remove, data, loading, error } = useHospitalCrud();
   const [hospitalData, setHospitalData] = useState([]);
-  const [columnsData, setColumnsData] = useState([]);
-
-  const { role } = useContext(roleContext);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -24,10 +18,8 @@ const HospitalTable = ({ items }) => {
   const handleAdd = async (formValues) => {
     try {
       const result = await add(formValues);
-      if (result) return result
-    } catch (err) {
-      console.log(err);
-    }
+      if (result) return result;
+    } catch (err) {}
   };
 
   const handleEdit = async (formValues, record) => {
@@ -39,9 +31,7 @@ const HospitalTable = ({ items }) => {
     try {
       const result = await remove(id);
       if (result?.hospital) updateHospitalData(result?.hospital);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const tableprops = {

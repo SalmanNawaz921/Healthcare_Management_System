@@ -41,7 +41,6 @@ export const useDepartmentCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Department not added");
     }
   };
@@ -59,7 +58,6 @@ export const useDepartmentCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Department not edited");
     }
   };
@@ -74,7 +72,6 @@ export const useDepartmentCrud = (steps) => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Department");
       }
     }

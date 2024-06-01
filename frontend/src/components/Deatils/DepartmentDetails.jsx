@@ -1,12 +1,6 @@
-import { useGetPatientQuery } from "@/redux/services/api/patientApi";
-import React, { useContext, useState } from "react";
-import DetailsWrapper from "../DetialsWrapper/DetailsWrapper";
-import InfoComponent from "../Settings/InfoComponent";
-import { FaUserAlt, FaUserEdit, FaUserMd } from "react-icons/fa";
+import { useState } from "react";
 import Settings from "../Settings/Settings";
-import roleContext from "@/context/RoleContext/roleContext";
 import { useParams } from "react-router-dom";
-import DepartmentTable from "../Tables/DepartmentTable";
 import DoctorTable from "../Tables/DoctorTable";
 import {
   useGetDepartmentQuery,
@@ -65,7 +59,7 @@ const DepartmentDetails = () => {
     />
   );
   const handleMenuClick = (obj) => {
-    if ( obj?.key === "Doctors") {
+    if (obj?.key === "Doctors") {
       setComponent(
         <DoctorTable
           details={details}
@@ -86,13 +80,13 @@ const DepartmentDetails = () => {
           error={patientError}
           type="admin"
           purpose="department"
-          />
-        );
-        setFormName(obj?.key);
-      }
-      if (obj?.key === "Treatments") {
-        setComponent(
-          <TreatmentTable
+        />
+      );
+      setFormName(obj?.key);
+    }
+    if (obj?.key === "Treatments") {
+      setComponent(
+        <TreatmentTable
           authToken={authToken}
           data={treatmentData}
           isLoading={isTreatmentLoading}
@@ -103,25 +97,19 @@ const DepartmentDetails = () => {
       );
       setFormName(obj?.key);
     }
-    console.log(formName);
   };
   return (
     <>
-      {console.log(details)}
       <Settings
         fullName={departmentDetails?.["Name"]}
         email={departmentDetails?.["Location"]}
         phoneno={departmentDetails?.["Contact"]}
         items={items}
         handleMenuClick={handleMenuClick}
-        // //formName={"patientInfo"}
-        // img={details?.["Img"]}
         noShow={true}
-        // details={details}
         formName={formName}
         component={component}
       />
-      
     </>
   );
 };

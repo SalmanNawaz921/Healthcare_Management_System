@@ -2,8 +2,6 @@ import GenTable from "./GenTable";
 import { sortAscending, sortDescending } from "@/utils/utils";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useTreatmentCrud } from "@/hooks/useTreatmentCrud";
-import { useContext } from "react";
-import roleContext from "@/context/RoleContext/roleContext";
 import TreatmentCards from "../Card/TreatmentCards";
 
 const TreatmentTable = ({
@@ -67,7 +65,6 @@ const TreatmentTable = ({
       const result = await add(formValues);
       if (result?.data?.treatments) return result?.data?.treatments;
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -79,10 +76,8 @@ const TreatmentTable = ({
   const handleDelete = async (id) => {
     try {
       const result = await remove(id);
-      console.log(result);
       if (result?.treatments) return result?.treatments;
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -122,7 +117,6 @@ const TreatmentTable = ({
             </div>
           )}
       <div className={purpose!=="department" && "shadow-2xl"}>
-        {/* {console.log(data)} */}
         <GenTable {...tableprops} />
       </div>
     </>

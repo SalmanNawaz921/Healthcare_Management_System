@@ -4,7 +4,6 @@ const User = require("./userModel");
 const Person = require("./personModel");
 const { executeQuery } = require("./genericModel");
 const { doctorAttributes } = require("../constants/constants");
-// const { doctorAttributes } = require("@/constants/constants");
 
 const Doctor = {
   async findById(id, transaction) {
@@ -40,7 +39,6 @@ const Doctor = {
     return result != null && result.length > 0 ? result[0] : null;
   },
   async getAllDoctors(id) {
-    console.log(id);
     const query = `SELECT Doctor.DoctorID, CONCAT (Person.FirstName,' ',Person.LastName) As [Name],Person.Contact,Person.Email, DATEDIFF(YEAR,Person.DateOfBirth,GETDATE()) As Age,Lookup.Value As Gender,Doctor.Specialization, Doctor.Experience, Hospital.Name AS [Hospital Name] FROM Doctor JOIN Person ON Doctor.DoctorID = Person.UserID JOIN Hospital ON Hospital.HospitalID =Doctor.HospitalID JOIN Lookup ON Lookup.Id = Person.Gender;
     `;
     const result = await executeQuery(query);
@@ -57,7 +55,6 @@ const Doctor = {
   },
 
   async getUnassignedDoctors(adminID) {
-    console.log(adminID);
     const query = `SELECT D.DoctorID,CONCAT (P.FirstName,' ',P.LastName) AS [Name], P.Email,DATEDIFF(YEAR, P.DateOfBirth, GETDATE()) AS Age,D.Specialization,D.Experience FROM Doctor D JOIN Person P ON D.DoctorID = P.UserID JOIN Hospital ON Hospital.HospitalID = D.HospitalID JOIN Admin ON Admin.AdminID = Hospital.AdminID  WHERE D.DoctorID NOT IN (SELECT DoctorID FROM DoctorDepartmentAssignment) AND Admin.AdminID=@adminID`;
     const parameters = [{ name: "adminID", type: sql.Int, value: adminID }];
     const result = await executeQuery(query, parameters);
@@ -74,7 +71,7 @@ const Doctor = {
     return result;
   },
 
-  async getAllDoctorsAdmin(adminID,transaction=null) {
+  async getAllDoctorsAdmin(adminID, transaction = null) {
     const query = `  SELECT Doctor.DoctorID,CONCAT (Person.FirstName,' ',Person.LastName) As [Name],Person.Email,l.Value As Gender,Doctor.Specialization, Department.Name As [DepartmenName], i.Value As Status,DoctorDepartmentAssignment.DateAssigned AS [Joining Date] FROM Doctor JOIN Person ON Doctor.DoctorID = Person.UserID JOIN DoctorDepartmentAssignment ON DoctorDepartmentAssignment.DoctorID = Doctor.DoctorID JOIN Department ON Department.DepartmentID = DoctorDepartmentAssignment.DepartmentID JOIN Hospital ON Hospital.HospitalID =Department.HospitalID JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup i ON i.Id= Doctor.Checkupstatus ${
       adminID
         ? "JOIN Admin ON Admin.AdminID = Hospital.AdminID Where Admin.AdminID=@id"
@@ -84,8 +81,7 @@ const Doctor = {
     const parameters = adminID
       ? [{ name: "id", type: sql.Int, value: adminID }]
       : null;
-    console.log(parameters);
-    const result = await executeQuery(query, parameters,transaction);
+    const result = await executeQuery(query, parameters, transaction);
     return result;
   },
 
@@ -93,7 +89,6 @@ const Doctor = {
     const query = `SELECT Appointment.AppointmentDate,FORMAT(Appointment.AppointmentDate, 'hh:mm tt') AS [AppointmentTime],DATEDIFF(HOUR,GETDATE(),Appointment.AppointmentDate) AS [HourDifference],CONCAT (Person.FirstName,' ',Person.LastName) As [Full Name],Person.Contact,Person.Email,l.Value As Gender, s.Value AS [AppointmentStatus] FROM Patient JOIN Appointment ON Appointment.PatientID = Patient.PatientID JOIN DOCTOR ON Doctor.DoctorID = Appointment.DoctorID JOIN Person ON Doctor.DoctorID = Person.UserID JOIN Hospital ON Hospital.HospitalID =Patient.HospitalID JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup s on s.Id = Appointment.AppointmentStatus  Where Patient.PatientID=@patientID ;
     `;
     const parameters = [{ name: "patientID", type: sql.Int, value: patientID }];
-    console.log(parameters);
     const result = await executeQuery(query, parameters, transaction);
     return result;
   },
@@ -105,7 +100,6 @@ const Doctor = {
       const result = await executeQuery(query, parameters);
       return result;
     } catch (error) {
-      console.log("Error finding Doctor Earnings", error);
       throw error;
     }
   },
@@ -119,7 +113,8 @@ const Doctor = {
     return result;
   },
   async getDoctorsByDepartment(departmentID) {
-    const query="SELECT Doctor.DoctorID,CONCAT (Person.FirstName,' ',Person.LastName) As [Name],Person.Email,l.Value As Gender,Doctor.Specialization, i.Value As Status FROM Doctor JOIN Person ON Doctor.DoctorID = Person.UserID  JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup i ON i.Id= Doctor.Checkupstatus  WHERE Doctor.DoctorID IN (SELECT DoctorID FROM DoctorDepartmentAssignment WHERE DepartmentID=@departmentID)";
+    const query =
+      "SELECT Doctor.DoctorID,CONCAT (Person.FirstName,' ',Person.LastName) As [Name],Person.Email,l.Value As Gender,Doctor.Specialization, i.Value As Status FROM Doctor JOIN Person ON Doctor.DoctorID = Person.UserID  JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup i ON i.Id= Doctor.Checkupstatus  WHERE Doctor.DoctorID IN (SELECT DoctorID FROM DoctorDepartmentAssignment WHERE DepartmentID=@departmentID)";
     const parameters = [
       { name: "departmentID", type: sql.Int, value: departmentID },
     ];
@@ -182,7 +177,6 @@ const Doctor = {
       await transaction.commit();
       return result != null && result.length > 0 ? result : null;
     } catch (error) {
-      console.log("Error registering doctor", error);
       await transaction.rollback();
       throw error;
     }
@@ -213,7 +207,6 @@ const Doctor = {
       const result = await this.findById(doctorId, transaction);
       return result;
     } catch (error) {
-      console.log("Error inserting doctor into database", error);
       throw error;
     }
   },
@@ -225,8 +218,6 @@ const Doctor = {
       await transaction.begin();
       const query = `UPDATE Doctor SET Qualification=COALESCE(@qualification,Qualification),Specialization=COALESCE(@specialization,Specialization),Experience=COALESCE(@experience,Experience),CheckupStatus=COALESCE(@checkupstatus,CheckupStatus),ConsultationFee=COALESCE(@consulationfee,ConsultationFee) WHERE DoctorID=@doctorid`;
       const parameters = doctorAttributes(params);
-
-      console.log(parameters);
       parameters.push({
         name: "doctorid",
         type: sql.Int,
@@ -237,13 +228,12 @@ const Doctor = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error updating doctor", error);
       await transaction.rollback();
       throw error;
     }
   },
 
-  async deleteDoctor(id,adminID) {
+  async deleteDoctor(id, adminID) {
     const pool = await getData();
     const transaction = pool.transaction();
     try {
@@ -267,11 +257,10 @@ const Doctor = {
       query = `DELETE Users WHERE UserID=@id`;
       parameters = [{ name: "id", type: sql.Int, value: id }];
       await executeQuery(query, parameters, transaction);
-      result=await this.getAllDoctorsAdmin(adminID,transaction)
+      result = await this.getAllDoctorsAdmin(adminID, transaction);
       await transaction.commit();
       return true;
     } catch (error) {
-      console.log("Error deleting doctor", error);
       await transaction.rollback();
       throw error;
     }

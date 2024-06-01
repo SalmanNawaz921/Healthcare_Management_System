@@ -13,10 +13,8 @@ const Admin = {
       const query = "SELECT * FROM Admin WHERE UserID = @id";
       const parameters = [{ name: "id", type: sql.Int, value: id }];
       const result = await executeQuery(query, parameters, transaction);
-      console.log(result);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding admin", err);
       throw err;
     }
   },
@@ -26,7 +24,6 @@ const Admin = {
       "SELECT Person.*,Users.Username FROM Users JOIN Person ON Users.UserID = Person.UserID WHERE Users.UserID = @id";
     const parameters = [{ name: "id", type: sql.Int, value: id }];
     const result = await executeQuery(query, parameters);
-    console.log(result);
     return result != null && result.length > 0 ? result[0] : null;
   },
   async getAllAdmins() {
@@ -42,7 +39,6 @@ const Admin = {
       const result = await executeQuery(query);
       return result;
     } catch (error) {
-      console.log("Error finding hospitals", error);
       throw error;
     }
   },
@@ -53,7 +49,6 @@ const Admin = {
       const result = await executeQuery(query);
       return result;
     } catch (error) {
-      console.log("Error finding hospitals", error);
       throw error;
     }
   
@@ -66,7 +61,6 @@ const Admin = {
       const result = await executeQuery(query, parameters);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding admin", err);
       throw err;
     }
   },
@@ -87,16 +81,6 @@ const Admin = {
       await transaction.begin();
       const user = await User.insertUser(username, password, role, transaction);
       let userId = user.UserID;
-      console.log(
-        username,
-        password,
-        firstname,
-        lastname,
-        email,
-        dateofBirth,
-        gender,
-        role
-      );
       const person = await Person.insertPerson(
         userId,
         firstname,
@@ -108,7 +92,6 @@ const Admin = {
       );
 
       const admin = await this.insertAdmin(person.UserID, transaction);
-      console.log(admin);
       let adminId = admin.AdminID;
       const query =
         "SELECT Users.UserName, Users.UserID, Person.Email, CONCAT (Person.FirstName,' ',Person.LastName) AS Name, Admin.JoinDate FROM Admin JOIN Person ON Person.UserID = @userId JOIN Users ON Users.UserID = @userId WHERE Admin.AdminID=@adminId";
@@ -120,7 +103,6 @@ const Admin = {
       await transaction.commit();
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log(err);
       await transaction.rollback();
     }
   },
@@ -134,7 +116,6 @@ const Admin = {
       const res = await this.findById(UserID, transaction);
       return res;
     } catch (error) {
-      console.log("Error inserting admin into database", error);
       throw error;
     }
   },

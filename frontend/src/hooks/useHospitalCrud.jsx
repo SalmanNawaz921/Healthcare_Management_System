@@ -40,7 +40,6 @@ export const useHospitalCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Hospital not added");
     }
   };
@@ -57,7 +56,6 @@ export const useHospitalCrud = (steps) => {
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Hospital not edited");
     }
   };
@@ -72,28 +70,10 @@ export const useHospitalCrud = (steps) => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Hospital");
       }
     }
   };
-
-  //   const getAllHospitals = async () => {
-  //     let result;
-  //     if (authToken && id) {
-  //       try {
-  //         result = await getAllHospitals(authToken);
-  //         if (!result.error) {
-  //           message.success("Hospital Deleted Successfully");
-  //         }
-  //         return result;
-  //       } catch (error) {
-  //         console.log(error);
-  //         message.error("Error: Deleting Hospital");
-  //       }
-  //     }
-  //   };
-
   return {
     add,
     edit,

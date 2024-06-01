@@ -1,13 +1,7 @@
-import roleContext from "@/context/RoleContext/roleContext";
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
-import GeneralTable from "./GeneralTable";
-import { Tag, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import {message } from "antd";
 import GenTable from "./GenTable";
 import { sortData } from "@/utils/utils";
 import { CloseSquareOutlined, CheckOutlined } from "@ant-design/icons";
-import DoctorCards from "../Card/DoctorCards";
 import { useAddAppointmentMutation } from "@/redux/services/api/appointmentApi";
 
 const DoctorTableForPatient = ({
@@ -17,7 +11,6 @@ const DoctorTableForPatient = ({
   authToken,
   type,
 }) => {
-  //   const options = details?.map((details, i) => details?.["HospitalID"]);
   const [bookAppointment, { isSuccess, isLoading, error: appointmentError }] =
     useAddAppointmentMutation();
   const items = [
@@ -78,8 +71,6 @@ const DoctorTableForPatient = ({
     if (record?.Status !== "Busy") {
       const credentials = { ...formValues, DoctorID: record?.DoctorID };
       const vals = { credentials, authToken };
-
-      console.log(vals);
       book = await bookAppointment(vals);
       if (book?.data) return book?.data;
     } else {

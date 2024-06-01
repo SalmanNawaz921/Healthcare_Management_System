@@ -1,6 +1,6 @@
 import Settings from "@/components/Settings/Settings";
 import React, { useState } from "react";
-import { FaUserAlt, FaUserEdit, FaUserMd } from "react-icons/fa";
+import { FaUserAlt, FaUserEdit } from "react-icons/fa";
 
 const HospitalAdminSettings = ({ details, username, img }) => {
   const [formName, setFormName] = useState("personalInfo");
@@ -28,7 +28,6 @@ const HospitalAdminSettings = ({ details, username, img }) => {
   };
   return (
     <>
-      {console.log(details?.admin)}
       <Settings
         items={items}
         handleMenuClick={handleMenuClick}

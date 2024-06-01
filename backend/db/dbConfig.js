@@ -7,10 +7,8 @@ const config = {
   password: process.env.PASSWORD,
   server: process.env.SERVER_NAME,
   database: process.env.DATABASE,
-  requestTimeout: 300000,
   options: {
     trustServerCertificate: true,
-    //encrypt: true, // If your SQL Server instance requires encryption
     trustedConnection: false,
     enableArithAbort: true,
   },

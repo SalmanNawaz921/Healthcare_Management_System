@@ -16,7 +16,6 @@ const view_doctorlist = async (req, res) => {
     const { UserID } = req.user;
     if (UserID) {
       const doctors = await doctor.getAllDoctors();
-      console.log(doctors);
       res.status(200).json(doctors);
     }
   } catch (error) {
@@ -200,7 +199,6 @@ const view_doctors_admin = async (req, res) => {
   try {
     const { AdminID } = req.user;
     let doctors;
-    console.log("Admin ID : " + AdminID);
     if (AdminID) {
       doctors = await doctor.getAllDoctorsAdmin(AdminID);
       res.status(200).json(doctors);

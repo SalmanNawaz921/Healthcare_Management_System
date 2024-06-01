@@ -1,7 +1,5 @@
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const maxAge = 3 * 24 * 60 * 60;
 const admin = require("../models/adminModel");
 const Patient = require("../models/patientModel");
 const Doctor = require("../models/doctorModel");
@@ -13,7 +11,6 @@ module.exports.registerOnRole = async (param) => {
     }
 
     const { role } = param;
-    console.log(role);
     if (!role) {
       throw new Error("role is required");
     }
@@ -33,7 +30,6 @@ module.exports.registerOnRole = async (param) => {
         throw new Error("Invalid role");
     }
   } catch (error) {
-    console.error("Error in registration:", error.message);
     throw error;
   }
 };
@@ -80,11 +76,9 @@ async function registerPatient(param) {
     "MedicalHistory",
     "HospitalID",
   ];
-  console.log(param);
   checkRequiredParams(param, requiredParams);
   const salt = await bcrypt.genSalt(10);
   const securePass = await bcrypt.hash(param.Password, salt);
-console.log(securePass);
   return await Patient.register(
     param.Username,
     securePass,

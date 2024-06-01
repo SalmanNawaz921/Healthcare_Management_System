@@ -12,7 +12,6 @@ const authToken=localStorage.getItem("Doctortoken");
   const prescriptionInputs = prescriptionAttributes(options,symtomOptions);
   return (
     <div className="grid grid-cols-2 gap-2">
-      {console.log(prescriptionInputs)}
       {prescriptionInputs.map((input, i) => (
         <CommonInput
           key={i}

@@ -1,50 +1,15 @@
 import React from "react";
-import { Avatar, Button, Drawer, Dropdown } from "antd";
-import { useState } from "react";
+import { Avatar, Button, Dropdown } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
-import Sidebar from "../Sidebar/Sidebar";
 import logo from "@/assets/logo.png";
-import { Layout, Menu, theme } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
+import { NavLink, useLocation } from "react-router-dom";
 const Navbar = ({ name, isMenuOpen, setIsMenuOpen }) => {
   let mobile = useMediaQuery({ query: "(max-width: 1200px)" });
   const items = [
     {
       key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item
-        </a>
-      ),
+      label: <NavLink to="/">Logout</NavLink>,
     },
   ];
   return (

@@ -1,6 +1,5 @@
-import { usePrescriptionCrud } from "@/hooks/usePrescriptionCrud";
 import GenTable from "./GenTable";
-import { sortAscending, sortData, sortDescending } from "@/utils/utils";
+import { sortData } from "@/utils/utils";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const PrescriptionTable = ({ data, loading, error, authToken, type }) => {

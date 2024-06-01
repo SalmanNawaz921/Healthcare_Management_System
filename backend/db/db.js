@@ -6,7 +6,6 @@ const getData = async () => {
     let pool = await sql.connect(config);
     return pool;
   } catch (error) {
-    console.log(error);
   }
 };
 

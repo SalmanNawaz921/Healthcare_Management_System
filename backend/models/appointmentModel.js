@@ -17,7 +17,6 @@ const Appointment = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Appointment", err);
       throw err;
     }
   },
@@ -29,7 +28,6 @@ const Appointment = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Department", err);
       throw err;
     }
   },
@@ -41,7 +39,6 @@ const Appointment = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Appointments", error);
       throw error;
     }
   },
@@ -53,7 +50,6 @@ const Appointment = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Appointments", error);
       throw error;
     }
   },
@@ -84,7 +80,6 @@ const Appointment = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error adding Appointment", error);
       await transaction.rollback();
       throw error;
     }
@@ -101,10 +96,9 @@ const Appointment = {
         SELECT DoctorID
         FROM Appointment
         WHERE AppointmentStatus = 18
-        AND DATEADD(MINUTE, 30, AppointmentDate) <= @currentTime
-    `;
+        AND DATEADD(minute, DATEDIFF(minute, 0, AppointmentDate) + 30, 0) <= @currentTime
+        `;
 
-    //console.log("Updating doctor status...");
 
     // Execute the query to find ended appointments
     const endedAppointments = await executeQuery(endedAppointmentsQuery, [
@@ -135,14 +129,12 @@ const Appointment = {
       await transaction.begin();
       const query = `UPDATE Appointment SET DoctorID = COALESCE(@doctorID,DoctorID), PatientID = COALESCE(@patientID,PatientID), AppointmentStatus =COALESCE(@appointmentStatus,AppointmentStatus), AppointmentDate = COALESCE(@appointmentdate,AppointmentDate) WHERE AppointmentID = @id`;
       const parameters = appointmentAttributes(params);
-      console.log(adminID);
       parameters.push({ name: "id", type: sql.Int, value: id });
       await executeQuery(query, parameters, transaction);
       const result = await this.getAllAppointments(adminID, transaction);
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing Appointment", error);
       await transaction.rollback();
       throw error;
     }
@@ -156,7 +148,6 @@ const Appointment = {
       const result = await this.getAllAppointments(adminID, transaction);
       return result;
     } catch (error) {
-      console.log("Error deleting Appointment", error);
       throw error;
     }
   },
@@ -166,10 +157,8 @@ const Appointment = {
       const query = `DELETE FROM Department WHERE HospitalID = @id`;
       const parameters = [{ name: "id", type: sql.Int, value: id }];
       await executeQuery(query, parameters);
-      console.log("reached");
       return (success = true);
     } catch (error) {
-      console.log("Error deleteing hospital", error);
       return false;
     }
   },
@@ -184,7 +173,6 @@ const Appointment = {
         return result;
       }
     } catch (error) {
-      console.log("Error deleting hospital", error);
       return false;
     }
   },

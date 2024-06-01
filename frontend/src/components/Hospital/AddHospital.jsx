@@ -15,7 +15,6 @@ const AddHospital = ({ data, handleChange }) => {
   const hospitalAttributes = hospitalInputs(options);
   return (
     <div className="grid grid-cols-2 gap-2">
-      {console.log(adminOptions,options)}
       {hospitalAttributes.map((input, i) => (
         <CommonInput
           key={i}

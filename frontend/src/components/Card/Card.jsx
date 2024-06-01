@@ -1,6 +1,4 @@
-import { Card } from "antd";
 import React from "react";
-import { TeamOutlined } from "@ant-design/icons";
 const StyledCard = ({ cardType, title, Chart, Icon, count, subtitle }) => (
   <div className="bg-white flex-btn gap-4 rounded-xl border-[1px] border-border p-5 shadow-xl">
     <div className="w-3/4">

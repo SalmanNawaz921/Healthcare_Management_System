@@ -3,14 +3,7 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import Navbar from "@/components/Navbar/Navbar";
 import PageWrapper from "@/components/PageWrapper/PageWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import TreatmentTable from "@/components/Tables/TreatmentTable";
-import { doctorOptions, patientOptions } from "@/constants/constants";
-import {
-  useGetAllPatientsQuery,
-  useGetAppointmentsDoctorQuery,
-  useGetDoctorDetailsQuery,
-  useGetTreatmentsByDepartmentQuery,
-} from "@/redux/services/api/doctorApi";
+import {patientOptions } from "@/constants/constants";
 import { useState } from "react";
 import PatientsTable from "@/components/Tables/PatientsTable";
 import AppointmentsCalendar from "@/components/AppointmentCalender/AppointmentsCalender";
@@ -21,7 +14,6 @@ import PatientDashboard from "./PatientDashboard";
 import { useGetAllDoctorsByHospitalQuery, useGetAllInvoicesPatientQuery, useGetAllPrescriptionsPatientQuery, useGetPatientAllAppointmentsQuery } from "@/redux/services/api/patientApi";
 import InvoiceTable from "@/components/Tables/InvoiceTable";
 import PatientSettings from "./PatientSettings";
-import DoctorTable from "@/components/Tables/DoctorTable";
 import DoctorTableForPatient from "@/components/Tables/DoctorTableForPatient";
 
 
@@ -132,7 +124,6 @@ const Patient = () => {
 
   return (
     <>
-    {console.log(doctorsData)}
       <PageWrapper
         SidebarComponent={SidebarComponent}
         HeaderComponent={HeaderComponent}

@@ -1,14 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { RiCloseLine } from "react-icons/ri";
-import { HiOutlineMenu } from "react-icons/hi";
-import { doctorOptions } from "../../constants/constants";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { adminOptions } from "../../constants/constants";
-import roleContext from "@/context/RoleContext/roleContext";
-const NavLinks = ({ options, username, handleClick, type }) => (
+const NavLinks = ({ options, username, handleClick, type,setMenuOpen }) => (
   <div className="mt-10 ml-10">
-    {console.log(options)}
     {options?.map((option) => (
       <NavLink
         key={option.value}
@@ -18,7 +11,7 @@ const NavLinks = ({ options, username, handleClick, type }) => (
             : `/${type}/${username}/${option.label.toLowerCase()}`
         }
         className="my-8 mr-5 font-medium flex flex-row items-center justify-start hover:text-[#bfbfbf] text-black"
-        onClick={() => option.label==="Logout"? localStorage.clear() : handleClick && handleClick()}
+        onClick={() => option.label==="Logout"? localStorage.clear() :setMenuOpen(false)}
       >
         {option.Icon && <option.Icon className="w-6 h-6 mx-5 text-2xl" />}
         {option.label}
@@ -28,9 +21,6 @@ const NavLinks = ({ options, username, handleClick, type }) => (
 );
 
 const Sidebar = ({ options, username, type }) => {
-  const navigate = useNavigate();
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="mt-20 ">

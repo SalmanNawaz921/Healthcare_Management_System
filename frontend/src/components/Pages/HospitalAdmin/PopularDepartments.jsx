@@ -1,7 +1,5 @@
 import SideCard from "@/components/SideCard/SideCard";
-import { useDepartmentCrud } from "@/hooks/useDepartmentCrud";
 import { Card } from "antd";
-import React from "react";
 
 const PopularDepartments = ({data}) => {
   return (

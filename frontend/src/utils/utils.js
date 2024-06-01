@@ -175,7 +175,6 @@ export const searchByKey = (data, keyToSearch, val) => {
 export const convertDateToMonth = (date) => {
   // Extract the month from the date string
   const month = new Date(date).getMonth();
-  // console.log(date.getMonth());
   // Convert month number to month name
   const monthName = new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -194,7 +193,6 @@ export const calculateEarningsByMonth = (data, date, earnings) => {
       else earningsByMonth[monthName] = 1;
     }
   });
-  // console.log(earningsByMonth);
   return earningsByMonth;
 };
 

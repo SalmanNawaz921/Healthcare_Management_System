@@ -18,7 +18,6 @@ const insertDepartmentDetails = async (req, res) => {
       hospital = await Hospital.getHospitalByAdminId(AdminID);
       let params = req.body;
       params = { ...params, HospitalID: hospital[0].HospitalID };
-      console.log(params);
       const department = await Department.addDepartment(params);
       if (department) {
         success = true;
@@ -76,7 +75,6 @@ const delete_department = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -84,12 +82,10 @@ const delete_department = async (req, res) => {
 const get_details = async (req, res) => {
   try {
     const { AdminID } = req.user;
-    // console.log("User ID: ", AdminID);
 
     let admin;
     if (AdminID) {
       admin = await HospitalAdmin.getHospitalAdminDetails(AdminID);
-      // console.log(admin);
     }
     if (!admin) {
       return res.status(400).json({ msg: "No Details" }); // Return to exit function after sending response
@@ -142,7 +138,6 @@ const delete_treatment = async (req, res) => {
     treatment = await Treatment.deleteTreatment(req.params.id, AdminID);
     res.json({ success: true, treatments: treatment });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -188,11 +183,9 @@ const delete_medicine = async (req, res) => {
     if (!medicine) {
       return res.status(404).send({ message: "Medicine not found" });
     }
-    console.log(medicine);
     medicine = await Medicine.deleteMedicine(req.params.id);
     res.json({ SUCCESS: "Medicine has been removed", medicines: medicine });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -254,16 +247,13 @@ const delete_appointment = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
 
 const assign_doctor = async (req, res) => {
   try {
-    console.log(req.body);
     const { DepartmentID, DoctorID } = req.body;
-    console.log(DepartmentID, DoctorID);
     const department = await Department.findById(DepartmentID);
     if (!department) {
       return res.status(404).send({ message: "Department not found" });
@@ -271,7 +261,6 @@ const assign_doctor = async (req, res) => {
     const doctor = await Doctor.assignDoctor(DoctorID, DepartmentID);
     res.json({ success: true, doctor: doctor });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -335,7 +324,6 @@ const delete_doctor = async (req, res) => {
     doctor = await Doctor.deleteDoctor(req.params.id, AdminID);
     res.json({ success: true, doctors: doctor });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -351,7 +339,6 @@ const delete_patient = async (req, res) => {
       res.json({ success: true, patients: patient });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -362,7 +349,7 @@ const view_department_details = async (req, res) => {
     const department = await Department.findById(id);
     res.status(200).json(department);
   } catch (error) {
-    res.status(400).json({ success:false, msg: error });
+    res.status(400).json({ success: false, msg: error });
   }
 };
 
@@ -372,10 +359,9 @@ const view_doctors_by_department = async (req, res) => {
     const doctor = await Doctor.getDoctorsByDepartment(id);
     res.status(200).json(doctor);
   } catch (error) {
-    res.status(400).json({ success:false, msg: error });
+    res.status(400).json({ success: false, msg: error });
   }
-
-}
+};
 
 const view_patients_by_department = async (req, res) => {
   try {
@@ -383,9 +369,9 @@ const view_patients_by_department = async (req, res) => {
     const patient = await Patient.getPatientByDepartment(id);
     res.status(200).json(patient);
   } catch (error) {
-    res.status(400).json({ success:false, msg: error });
+    res.status(400).json({ success: false, msg: error });
   }
-}
+};
 
 const view_treatments_by_departmment = async (req, res) => {
   try {
@@ -393,10 +379,9 @@ const view_treatments_by_departmment = async (req, res) => {
     const treatment = await Treatment.getTreatmentsByDepartment(id);
     res.status(200).json(treatment);
   } catch (error) {
-    res.status(400).json({ success:false, msg: error });
+    res.status(400).json({ success: false, msg: error });
   }
-
-}
+};
 
 module.exports = {
   insertDepartmentDetails,
@@ -422,5 +407,5 @@ module.exports = {
   view_department_details,
   view_patients_by_department,
   view_doctors_by_department,
-  view_treatments_by_departmment
+  view_treatments_by_departmment,
 };

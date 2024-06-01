@@ -1,23 +1,19 @@
-import { qualificationSpecializations } from "@/constants/constants";
 import { Button, Form, message } from "antd";
 import { useState } from "react";
-import CommonInput from "@/components/CommonInput/CommonInput";
 import PersonalInfo from "../SignUp/PersonalInfo";
 import UserInfo from "../SignUp/UserInfo";
 import { DeleteOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import DoctorInfo from "../Doctor/DoctorInfo";
-import { useContext } from "react";
-import roleContext from "@/context/RoleContext/roleContext";
 import PatientInfo from "../Patient/PatientInfo";
+import { useNavigate } from "react-router-dom";
 
-const FormComponent = ({ data, type, isSuccess, id, details }) => {
+const FormComponent = ({ data, type, id, details, deleteUser }) => {
   const [formValues, setFormValues] = useState(details ? details : []);
   const updateFormValues = (name, value) => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-    console.log(formValues);
   };
 
   const getFormValues = () => {
@@ -69,11 +65,29 @@ const FormComponent = ({ data, type, isSuccess, id, details }) => {
     }
   };
 
-  const role = useContext(roleContext);
+  const handleDelete = async () => {
+    try {
+      let result;
+      let authToken =
+        localStorage.getItem("Doctortoken") ||
+        localStorage.getItem("Patienttoken");
+
+      if (authToken) {
+        const params = { id, authToken };
+        result = await deleteUser(params);
+      }
+
+      if (result?.data?.success === true) {
+        useNavigate("/login");
+        message.success(`Success! ${type} deleted successfully`);
+      } 
+    } catch (error) {
+      message.error("Error: User cannot be deleted");
+    }
+  };
   const handleEdit = async () => {
     try {
       const persondId = id;
-      console.log(id);
       const credentials = { ...formValues, persondId };
       let result;
       let authToken;
@@ -83,37 +97,37 @@ const FormComponent = ({ data, type, isSuccess, id, details }) => {
         authToken = localStorage.getItem("Patienttoken");
       if (authToken) {
         const params = { credentials, authToken };
-        console.log(params);
         result = await data(params);
       } else {
-        const params={credentials,id}
+        const params = { credentials, id };
         result = await data(params);
       }
 
-      if (result?.data?.success===true) {
-        // console.log(result);
+      if (result?.data?.success === true) {
         message.success(`Success! ${type} updated successfully`);
-      } else {
-        console.log(result?.error?.data?.msg);
-      }
+      } 
     } catch (error) {
       message.error("Error: User cannot be updated");
     }
   };
+
   return (
     <Form onFinish={handleEdit}>
       {renderInputComponent()}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-        <Form.Item>
-          <Button
-            className="btn-danger"
-            htmlType="submit"
-            size="large"
-            icon={<DeleteOutlined />}
-          >
-            Delete Account
-          </Button>
-        </Form.Item>
+      <div className={`${deleteUser?"grid grid-cols-1 sm:grid-cols-2 gap-4":""} w-full`}>
+        {deleteUser && (
+            <Form.Item>
+              <Button
+                className="btn-danger"
+                htmlType="submit"
+                size="large"
+                icon={<DeleteOutlined />}
+                onClick={handleDelete}
+              >
+                Delete Account
+              </Button>
+            </Form.Item>
+          )}
 
         <Form.Item>
           <Button

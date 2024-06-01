@@ -6,7 +6,6 @@ import { FloatButton } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import Model from "../Model/Model";
 import { searchByKey } from "@/utils/utils";
-import PatientDetails from "../Deatils/PatientDetails";
 const GenTable = ({
   details,
   handleEdit,
@@ -20,12 +19,10 @@ const GenTable = ({
   handleSort,
   items,
   handleClick,
-  authToken,
   sortingOptions,
   columnsToFilter,
   genderOptions,
   handleGender,
-  genderPlaceHolder,
   filterKey,
   entries,
   ViewComponent,
@@ -38,11 +35,10 @@ const GenTable = ({
   const [record, setRecord] = useState(null);
   const [data, setData] = useState(details);
   const [columnsData, setColumnsData] = useState([]);
-  const [viewComponent, setViewComponent] = useState(false);
   const navigate = useNavigate();
 
   const updateData = (data) => {
-    console.log(data);
+
     const firstItem = data[0];
     const extractedColumns = Object.keys(firstItem)
       .filter((key) => columnsToFilter && !columnsToFilter.includes(key))
@@ -68,7 +64,6 @@ const GenTable = ({
   const handleSearch = (val) => {
     setSearch(val);
     const filteredData = searchByKey(details, keyToSearch, val);
-    console.log(filteredData);
     if (filteredData.length === 0) return;
     updateData(filteredData);
   };

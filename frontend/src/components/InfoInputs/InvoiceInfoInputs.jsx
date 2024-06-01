@@ -1,4 +1,4 @@
-import { hospitalInputs, invoiceAttributes } from "@/constants/constants";
+import {invoiceAttributes } from "@/constants/constants";
 import React from "react";
 import CommonInput from "../CommonInput/CommonInput";
 

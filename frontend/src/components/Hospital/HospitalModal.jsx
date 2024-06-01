@@ -27,8 +27,7 @@ const HospitalModal = ({
       await onOk(formValues);
       setFormValues({});
     } catch (error) {
-      console.log(error);
-      message.error("Error: " + error.message);
+      message.error("Error: " + "Something went wrong");
     }
   };
 
@@ -41,7 +40,6 @@ const HospitalModal = ({
       onCancel={onCancel}
       okText="Save"
     >
-      {/* {console.log(initialValues)} */}
       <Form>
         <AddHospital
           data={getFormValues()}

@@ -79,7 +79,6 @@ const PatientsTable = ({
   }
 
   const handleEdit = async (formValues, record) => {
-    console.log("Edit", formValues, record);
     if (record?.Status == "Pending") {
       const prescription = await add(formValues, record);
       if (prescription) return prescription;
@@ -91,7 +90,6 @@ const PatientsTable = ({
 
   const handleDelete = async (id) => {
     const result = await deletePatient({ id, authToken });
-    console.log(result?.data?.patients);
     if (result?.data?.patients) {
       message.success("Patient Successfully Deleted");
       return result?.data?.patients;

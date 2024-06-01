@@ -10,7 +10,6 @@ import {
 } from "@/redux/services/api/doctorApi";
 import { allMonths } from "@/utils/utils";
 import DashboardWrapper from "@/components/DashboardWrapper/DashboardWrapper";
-import TreatmentTable from "@/components/Tables/TreatmentTable";
 import TreatmentsTable from "@/components/Tables/TreatmentsTable";
 const DoctorDashboard = ({ consultationFee }) => {
   const authToken = localStorage.getItem("Doctortoken");
@@ -47,7 +46,6 @@ const DoctorDashboard = ({ consultationFee }) => {
       const multipliedData = allMonths.reduce((acc, monthName) => {
         const count = monthCounts[monthName] || 0; // Set count to 0 if no visits in the month
         acc[monthName] = count * consultationFee;
-        console.log(acc);
         return acc;
       }, {});
 

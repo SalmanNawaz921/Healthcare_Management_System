@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar/Navbar";
 import PageWrapper from "@/components/PageWrapper/PageWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DoctorDashboard from "./DoctorDashboard";
-import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import TreatmentTable from "@/components/Tables/TreatmentTable";
 import DoctorSettings from "./DoctorSettings";
 import { doctorOptions } from "@/constants/constants";

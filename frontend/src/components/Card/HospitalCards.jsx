@@ -1,11 +1,5 @@
-import { useDepartmentCrud } from "@/hooks/useDepartmentCrud";
-import React from "react";
 import StyledCard from "./Card";
-import {
-  useGetDepartmentEarningsQuery,
-  useGetDoctorsQuery,
-} from "@/redux/services/api/hospitalAdminApi";
-import { departmentCards, hospitalCards } from "@/constants/constants";
+import {  hospitalCards } from "@/constants/constants";
 import { useGetAllDoctorsQuery, useGetAllEarningsQuery } from "@/redux/services/api/adminApi";
 
 const HospitalCards = () => {

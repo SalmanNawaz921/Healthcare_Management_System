@@ -1021,12 +1021,3 @@ export const invoiceCards = [
     subtitle: " invoices paid",
   },
 ];
-// Function to get specializations based on qualification
-
-// ? found.specializations : [];
-// Example usage
-// console.log(getSpecializations("MBBS")); // Output: ["General Medicine", "General Surgery", "Pediatrics"]
-// console.log(getSpecializations("MD")); // Output: ["Cardiology", "Oncology", "Neurology"]
-// console.log(getSpecializations("DO")); // Output: ["Family Medicine", "Osteopathic Manipulative Medicine", "Internal Medicine"]
-// console.log(getSpecializations("BDS")); // Output: ["General Dentistry", "Orthodontics", "Pediatric Dentistry", "Oral and Maxillofacial Radiology", "Oral Pathology", "Public Health Dentistry"]
-// console.log(getSpecializations("PhD"));

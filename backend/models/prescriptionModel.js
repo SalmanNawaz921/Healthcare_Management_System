@@ -1,13 +1,7 @@
 const sql = require("mssql");
 const { getData } = require("../db/db");
 const { executeQuery } = require("./genericModel");
-const {
-  hospitalAttributes,
-  departmentAttributes,
-  appointmentAttributes,
-  prescriptionAttributes,
-} = require("../constants/constants");
-const Appointment = require("./appointmentModel");
+const { prescriptionAttributes } = require("../constants/constants");
 const Patient = require("./patientModel");
 const Invoice = require("./invoiceModel");
 
@@ -19,7 +13,6 @@ const Prescription = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding Prescription", err);
       throw err;
     }
   },
@@ -32,7 +25,6 @@ const Prescription = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Prescriptions", error);
       throw error;
     }
   },
@@ -45,7 +37,6 @@ const Prescription = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Prescriptions", error);
       throw error;
     }
   },
@@ -57,7 +48,6 @@ const Prescription = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (error) {
-      console.log("Error finding Prescriptions", error);
       throw error;
     }
   },
@@ -88,11 +78,9 @@ const Prescription = {
         transaction
       );
       const patientID = patient?.PatientID[0];
-      console.log(patientID);
       query = `UPDATE Appointment SET AppointmentStatus = 19 FROM Appointment JOIN PatientSymptoms ON PatientSymptoms.SymptomID= ${params.SymptomID} WHERE PatientSymptoms.SymptomID= ${params.SymptomID}`;
       await executeQuery(query, [], transaction);
       let cost = 0;
-      console.log(params);
       if (doctorID) {
         const consultationFee = await this.getConsultationFeeOfDoctor(
           doctorID,
@@ -124,7 +112,6 @@ const Prescription = {
         invoiceId: result,
         totalAmount: cost,
       };
-      console.log(invoiceParams);
       await Invoice.generateInvoice(invoiceParams, transaction);
       const allPrescriptions = await this.getAllPrescriptionsDoctor(
         doctorID,
@@ -134,7 +121,6 @@ const Prescription = {
       await transaction.commit();
       return allPrescriptions;
     } catch (error) {
-      console.log("Error adding Prescription", error);
       if (transaction) {
         await transaction.rollback();
       }
@@ -201,15 +187,9 @@ const Prescription = {
     const transaction = pool.transaction();
     try {
       await transaction.begin();
-      //       UPDATE your_table
-      // SET column1 = COALESCE(@newValue1, column1),
-      //     column2 = COALESCE(@newValue2, column2),
-      //     ...
-      // WHERE condition;
 
       const query = `UPDATE Prescription SET DoctorID = COALESCE(@doctorID,DoctorID), SymptomID = COALESCE(@symptomID,SymptomID), TreatmentID = COALESCE(@treatmentID,TreatmentID), MedicineID = COALESCE(@medicineID,MedicineID), Diagnosis = COALESCE(@diagnosis,Diagnosis), CaseType=COALESCE(@caseType,CaseType), DateStarted= COALESCE(@dateStarted,DateStarted), Advice = COALESCE(@advice,Advice) WHERE PrescriptionID = @id`;
       const parameters = prescriptionAttributes(params);
-      console.log(adminID);
       parameters.push({ name: "id", type: sql.Int, value: id });
       await executeQuery(query, parameters, transaction);
       const result = await this.getAllPrescriptionsDoctor(
@@ -219,7 +199,6 @@ const Prescription = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing Prescription", error);
       await transaction.rollback();
       throw error;
     }
@@ -236,7 +215,6 @@ const Prescription = {
       );
       return result;
     } catch (error) {
-      console.log("Error deleting Prescription", error);
       throw error;
     }
   },

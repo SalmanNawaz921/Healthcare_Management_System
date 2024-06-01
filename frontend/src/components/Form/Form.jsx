@@ -1,10 +1,9 @@
 import { Form, Button, message } from "antd";
 import { users } from "@/constants/constants";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import roleContext from "@/context/RoleContext/roleContext";
 import Role from "../Role/Role";
 import { useLoginMutation } from "@/redux/services/api/authApi";
-import alertContext from "@/context/AlertContext/alertContext";
 import UserInfo from "../SignUp/UserInfo";
 
 import logo from "@/assets/logo.png";
@@ -12,8 +11,6 @@ import Stepper from "../Stepper/Stepper";
 import { useMultiStepForm } from "@/hooks/useMultiStepForm";
 const Frm = ({ formType }) => {
   const { role, navigateBaseOnRole } = useContext(roleContext);
-  const { showAlert } = useContext(alertContext);
-  const [formValues, setFormValues] = useState({});
 
   const handleInputChange = (name, value) => {
     setFormValues((prevValues) => ({
@@ -57,7 +54,6 @@ const Frm = ({ formType }) => {
         message.error("Error: " + result?.error?.data);
       }
     } catch (error) {
-      console.error("Login error:", result?.error?.data?.msg);
       message.error("Error: " + result?.error?.data?.msg);
     }
   };

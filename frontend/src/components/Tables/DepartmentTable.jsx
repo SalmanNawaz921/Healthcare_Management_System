@@ -3,6 +3,7 @@ import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useGetDepartmentsQuery } from "@/redux/services/api/hospitalAdminApi";
 import DepartmentCards from "../Card/DepartmentCards";
 import { useDepartmentCrud } from "@/hooks/useDepartmentCrud";
+import { message } from "antd";
 
 const DepartmentTable = () => {
   const authToken = localStorage.getItem("Hospital Admintoken");
@@ -30,7 +31,6 @@ const DepartmentTable = () => {
       }
       return data;
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -46,7 +46,6 @@ const DepartmentTable = () => {
       }
       return data;
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -58,7 +57,6 @@ const DepartmentTable = () => {
       }
       return data;
     } catch (err) {
-      console.log(err);
     }
   };
 

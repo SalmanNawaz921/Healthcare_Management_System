@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import TodayAppointments from "@/components/Pages/Doctor/TodayAppointments";
 import SplineChart from "@/components/Charts/SplineChart";
 import DashboardWrapper from "@/components/DashboardWrapper/DashboardWrapper";
-import { useGetAllDoctorsByHospitalQuery, useGetPatientAllAppointmentsQuery } from "@/redux/services/api/patientApi";
+import { useGetAllDoctorsByHospitalQuery } from "@/redux/services/api/patientApi";
 import RecentPatients from "../Doctor/RecentPatients";
 import AppointmentCards from "@/components/Card/AppointmentCards";
-import { allMonths, calculateEarningsByMonth } from "@/utils/utils";
-import GenTable from "@/components/Tables/GenTable";
+import { allMonths } from "@/utils/utils";
 import PopularDoctorTable from "../HospitalAdmin/PopularDoctorTable";
 const PatinetDashboard = ({
   appointmentData,
@@ -37,7 +36,6 @@ const PatinetDashboard = ({
       const multipliedData = allMonths.reduce((acc, monthName) => {
         const count = monthCounts[monthName] || 0; // Set count to 0 if no visits in the month
         acc[monthName] = count;
-        console.log(acc);
         return acc;
       }, {});
       setApointmentsByMONTH(multipliedData);
@@ -51,7 +49,6 @@ const PatinetDashboard = ({
       <div className="mt-5 w-full px-5 pb-5 ">
         <h1 className="font-bold text-xl"> Appointments</h1>
         <p className="text-gray-400">By month</p>
-        {console.log(apointmentsByMONTH)}
         <div className="">
           <SplineChart
             labels={allMonths}

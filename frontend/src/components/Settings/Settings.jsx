@@ -9,6 +9,7 @@ import InfoComponent from "./InfoComponent";
 import FormComponent from "./FormComponent";
 import { useEditPatientDetailsMutation } from "@/redux/services/api/patientApi";
 import DetailsComponent from "../Deatils/DetailsComponent";
+import { useDeleteDoctorMutation, useDeletePatientMutation } from "@/redux/services/api/hospitalAdminApi";
 
 const Settings = ({
   username,
@@ -39,6 +40,8 @@ const Settings = ({
     );
   };
 
+  
+
   const RightComponent = () => {
     let mutationHook;
     let type;
@@ -56,9 +59,24 @@ const Settings = ({
       type = "Patient Information";
       mutationHook = useEditPatientDetailsMutation;
     }
-    // console.log(type);
+    const role=localStorage.getItem("selectedRole");
+    let detetionHook;
+    let hookResult = [null, { isSuccess: false, isLoading: false, error: null }]; // Default value
+  
+    if (role === "3") {
+      detetionHook = useDeleteDoctorMutation;
+    } else if (role === "4") {
+      detetionHook = useDeletePatientMutation;
+    }
+  
+    if (detetionHook) {
+      hookResult = detetionHook();
+    }
+  
+    const [data, { isSuccess: isDeleteSuccess, isLoading: isDeleteLoading, error: deleteError }] = hookResult;
+  
     const [
-      data,
+      userDetails,
       {
         isSuccess: isPersonalSuccess,
         isLoading: isPersonalLoading,
@@ -68,14 +86,14 @@ const Settings = ({
     return (
       <>
         <h1 className="text-center text-3xl mb-10 font-poppins">{type}</h1>
-        {console.log("Details", details)}
           <FormComponent
-            data={data}
+            data={userDetails}
             // handleEdit={handleEdit}
             type={type}
             details={details}
             isSuccess={isPersonalSuccess}
             id={id} // You might need to adjust this depending on your data structure
+            deleteUser={localStorage.getItem("selectedRole") === "3" || localStorage.getItem("selectedRole")==="4" ? data : null}
           />
       </>
     );

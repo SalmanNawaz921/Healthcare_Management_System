@@ -2,21 +2,18 @@ import ChartCard from "@/components/ChartCard/ChartCard";
 import SplineChart from "@/components/Charts/SplineChart";
 import DashboardWrapper from "@/components/DashboardWrapper/DashboardWrapper";
 import {
-  useGetAllDoctorsQuery,
   useGetAllEarningsMonthlyQuery,
   useGetAllEarningsQuery,
 } from "@/redux/services/api/adminApi";
 import { allMonths, calculateEarningsByMonth } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
 import PopularHospitals from "./PopularHospitals";
-import DoctorTable from "@/components/Tables/DoctorTable";
 import MainAdminCards from "./MainAdminCards";
 
 const MainAdminDashboard = () => {
   const authToken = localStorage.getItem("Main Admintoken");
   const { data: hospitalEarnings } = useGetAllEarningsQuery(authToken);
   const {data}=useGetAllEarningsMonthlyQuery(authToken);
-  // const { data, isLoading, error } = useGetAllDoctorsQuery(authToken);
   const [earningsByMonth, setEarningsByMonth] = useState({});
 
   useEffect(() => {
@@ -51,7 +48,6 @@ const MainAdminDashboard = () => {
               data={splineData}
               label="Earnings By Hospitals"
             />
-            {console.log(data)}
           </div>
         </div>
       }

@@ -99,7 +99,7 @@ route.delete(
 route.get("/viewPatients", requireAuth("hospitalAdmin"), view_patients_admin);
 route.delete(
   "/deletePatient/:id",
-  requireAuth("hospitalAdmin"),
+  requireAuth(["hospitalAdmin","patient"]),
   delete_patient
 );
 
@@ -124,7 +124,7 @@ route.get(
   get_earnings_doctors
 );
 
-route.delete("/deleteDoctor/:id", requireAuth("hospitalAdmin"), delete_doctor);
+route.delete("/deleteDoctor/:id", requireAuth(["hospitalAdmin","doctor"]), delete_doctor);
 // Hospital Routes
 
 route.get(

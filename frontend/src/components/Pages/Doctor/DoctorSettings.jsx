@@ -1,5 +1,4 @@
 import Settings from "@/components/Settings/Settings";
-import PersonalInfo from "@/components/SignUp/PersonalInfo";
 import { useGetDoctorDetailsQuery } from "@/redux/services/api/doctorApi";
 import React, { useState } from "react";
 import { FaUserAlt, FaUserEdit, FaUserMd } from "react-icons/fa";

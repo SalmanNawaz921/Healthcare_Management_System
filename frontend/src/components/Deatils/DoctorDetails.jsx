@@ -1,17 +1,16 @@
-import { useGetPatientQuery } from "@/redux/services/api/patientApi";
-import React, { useContext, useState } from "react";
-import DetailsWrapper from "../DetialsWrapper/DetailsWrapper";
-import InfoComponent from "../Settings/InfoComponent";
-import { FaUserAlt, FaUserEdit, FaUserMd } from "react-icons/fa";
+import { useState } from "react";
+import { FaUserAlt, FaUserMd } from "react-icons/fa";
 import Settings from "../Settings/Settings";
-import roleContext from "@/context/RoleContext/roleContext";
 import { useParams } from "react-router-dom";
 import { useGetDoctorDetailsQuery } from "@/redux/services/api/doctorApi";
 
 const DoctorDetails = () => {
   const { id } = useParams();
-  const {data}=useGetDoctorDetailsQuery({authToken:localStorage.getItem("Hospital Admintoken"),id:id})
- 
+  const { data } = useGetDoctorDetailsQuery({
+    authToken: localStorage.getItem("Hospital Admintoken"),
+    id: id,
+  });
+
   const items = [
     {
       key: "Personal Information",
@@ -37,14 +36,12 @@ const DoctorDetails = () => {
   };
   return (
     <>
-      {console.log(data)}
       <Settings
         fullName={data?.["Name"]}
         email={data?.["Email"]}
         phoneno={data?.["Contact"]}
         items={items}
         handleMenuClick={handleMenuClick}
-        //formName={"patientInfo"}
         img={data?.["Img"]}
         noShow={true}
         details={data}

@@ -9,10 +9,6 @@ dotenv.config({
 
 const app = express();
 app.use(cors());
-
-// db.getData().then((res) => {
-//   console.log(res);
-// });
 // Define a route to handle requests for data
 app.use("/api/hospitals", (req, res) => {
   res.send(view_all_hospitals)

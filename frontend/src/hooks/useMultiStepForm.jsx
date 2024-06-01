@@ -5,11 +5,9 @@ export const useMultiStepForm = (steps) => {
   const [formValues, setFormValues] = useState([]);
 
   const previousStep = () => {
-    console.log(steps.length);
     return currentStep > 0 && setCurrentStep((prev) => prev - 1);
   };
   const nextStep = () => {
-    console.log(steps.length);
     return currentStep < steps.length && setCurrentStep((prev) => prev + 1);
   };
 
@@ -22,7 +20,6 @@ export const useMultiStepForm = (steps) => {
       ...prevValues,
       [name]: value,
     }));
-    console.log(getFormValues());
   };
 
   const getFormValues = () => {

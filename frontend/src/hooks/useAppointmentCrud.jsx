@@ -58,11 +58,9 @@ export const useAppointmentCrud = (steps) => {
       else throw new Error("User is not authenticated");
       if (isEditSuccess || !result.error) {
         message.success("Appointment edited successfully");
-        // setModalOpen(false);
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Appointment not edited");
     }
   };
@@ -77,7 +75,6 @@ export const useAppointmentCrud = (steps) => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Appointment");
       }
     }

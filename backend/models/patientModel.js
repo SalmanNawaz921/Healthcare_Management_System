@@ -12,7 +12,6 @@ const Patient = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding patient", err);
       throw err;
     }
   },
@@ -25,7 +24,6 @@ const Patient = {
       const result = await executeQuery(query, parameters, transaction);
       return result;
     } catch (err) {
-      console.log("Error finding all patients by admin", err);
       throw err;
     }
   },
@@ -37,7 +35,6 @@ const Patient = {
       const result = await executeQuery(query, parameters);
       return result;
     } catch (error) {
-      console.log("Error finding all patients by hospital", error);
       throw error;
     }
   },
@@ -52,7 +49,6 @@ const Patient = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (error) {
-      console.log("Error finding patient symptoms", error);
       throw error;
     }
   },
@@ -69,7 +65,6 @@ const Patient = {
       "SELECT Patient.PatientID,Patient.Weight,Patient.BloodPressure,Patient.Height,Patient.Allergies,Patient.AliveStatus,Patient.BloodType,Patient.MedicalHistory,Patient.HospitalID, Person.*,PatientSymptoms.SymptomName,PatientSymptoms.DateRecorded,PatientSymptoms.Description,Users.Username,PrescrIption.*,Appointment.AppointmentDate,Appointment.DoctorID FROM Patient JOIN Person ON Person.UserID= Patient.PatientID JOIN PatientSymptoms ON PatientSymptoms.PatientID = Patient.PatientID JOIN Prescription ON Prescription.SymptomID = PatientSymptoms.SymptomID JOIN Appointment ON Appointment.PatientID = Patient.PatientID  JOIN Users ON Users.UserID = Patient.PatientID WHERE Patient.PatientID =  @id";
     const parameters = [{ name: "id", type: sql.Int, value: id }];
     const result = await executeQuery(query, parameters, transaction);
-    console.log(result);
     return result != null && result.length > 0 ? result[0] : null;
   },
 
@@ -80,12 +75,6 @@ const Patient = {
     return result;
   },
 
-  // async getPatientPrescriptions(id,transaction=null){
-  //   const query = "SELECT * FROM Prescription WHERE S = @id";
-  //   const parameters = [{ name: "id", type: sql.Int, value: id }];
-  //   const result = await executeQuery(query, parameters,transaction);
-  //   return result;
-  // }
 
   async editPatient(id, parameters) {
     const pool = await getData();
@@ -98,7 +87,6 @@ const Patient = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing patient", error);
       await transaction.rollback();
       throw error;
     }
@@ -140,7 +128,6 @@ const Patient = {
         gender,
         transaction
       );
-      // console.log(person.PersonID, aliveStatus, medicalHistory);
       const patient = await this.insertPatient(
         userId,
         aliveStatus,
@@ -148,7 +135,6 @@ const Patient = {
         hospitalId,
         transaction
       );
-      console.log(patient);
 
       const patientSymptoms = await this.insertPatientSymptoms(
         patient.PatientID,
@@ -169,7 +155,6 @@ const Patient = {
       await transaction.commit();
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log(err);
       await transaction.rollback();
     }
   },
@@ -192,10 +177,8 @@ const Patient = {
       ];
       await executeQuery(query, parameters, transaction);
       const result = await this.findByUserId(personID, transaction);
-      console.log(result);
       return result;
     } catch (error) {
-      console.log("Error inserting patient into database", error);
       throw error;
     }
   },
@@ -212,7 +195,6 @@ const Patient = {
       const result = await this.getPatientSymptoms(patientID, transaction);
       return result;
     } catch (error) {
-      console.log("Error inserting patient symptoms into database", error);
       throw error;
     }
   },
@@ -258,7 +240,6 @@ const Patient = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error deleting patient", error);
       await transaction.rollback();
       throw error;
     }

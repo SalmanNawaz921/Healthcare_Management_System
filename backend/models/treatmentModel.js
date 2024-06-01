@@ -52,11 +52,9 @@ const Treatment = {
         adminID,
         transaction
       );
-      console.log(result);
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error adding Treatment", error);
       await transaction.rollback();
       throw error;
     }
@@ -77,7 +75,6 @@ const Treatment = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error editing Treatment", error);
       await transaction.rollback();
       throw error;
     }
@@ -97,7 +94,6 @@ const Treatment = {
       result = await this.getAllTreatmentsByHospitalAdmin(adminID);
       return result;
     } catch (error) {
-      console.log("Error deleting Treatment", error);
       await transaction.rollback();
       throw error;
     }

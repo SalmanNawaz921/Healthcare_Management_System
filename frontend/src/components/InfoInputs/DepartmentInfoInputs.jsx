@@ -1,7 +1,6 @@
-import { departmentInputs, hospitalInputs, treatmentAttributes } from "@/constants/constants";
+import { departmentInputs } from "@/constants/constants";
 import React from "react";
 import CommonInput from "../CommonInput/CommonInput";
-import { useGetDepartmentsQuery } from "@/redux/services/api/hospitalAdminApi";
 
 const DepartmentInfoInputs = ({ data, handleChange }) => {
 

@@ -55,11 +55,9 @@ export const usePrescriptionCrud = () => {
       else throw new Error("User is not authenticated");
       if (isEditSuccess || !result.error) {
         message.success("Prescription edited successfully");
-        // setModalOpen(false);
       }
       return result;
     } catch (error) {
-      console.log(error);
       message.error("Uncaught Error: Prescription not edited");
     }
   };
@@ -74,7 +72,6 @@ export const usePrescriptionCrud = () => {
         }
         return result?.data;
       } catch (error) {
-        console.log(error);
         message.error("Error: Deleting Prescription");
       }
     }

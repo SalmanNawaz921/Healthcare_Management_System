@@ -17,9 +17,7 @@ const RecentPatients = ({ data, isSuccess }) => {
     <>
       {isSuccess && (
         <Card className="bg-white rounded-xl border-[1px] border-border">
-          {console.log(data)}
           <h2 className="font-poppins mb-4">Recent Appointments</h2>
-{console.log(data)}
           {data
             ?.filter(
               (appointment) => appointment?.["AppointmentStatus"]?appointment?.["AppointmentStatus"] === "Done":appointment?.["Status"]==="Done"

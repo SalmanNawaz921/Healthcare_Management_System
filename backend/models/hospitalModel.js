@@ -12,7 +12,6 @@ const Hospital = {
       const result = await executeQuery(query, parameters, transaction);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (err) {
-      console.log("Error finding hospital", err);
       throw err;
     }
   },
@@ -22,7 +21,6 @@ const Hospital = {
       const result = await executeQuery(query);
       return result;
     } catch (error) {
-      console.log("Error finding hospitals", error);
       throw error;
     }
   },
@@ -34,19 +32,16 @@ const Hospital = {
       const result = await executeQuery(query, parameters);
       return result != null && result.length > 0 ? result[0] : null;
     } catch (error) {
-      console.log("Error finding hospitals", error);
       throw error;
     }
   },
   async getHospitalEarnings(id) {
     try {
-      console.log(id);
       const query = ` SELECT (Doctor.ConsultationFee * COUNT(Appointment.AppointmentID)) AS Earnings, Appointment.AppointmentDate AS Date FROM Doctor  JOIN Appointment ON Doctor.DoctorID = Appointment.DoctorID  JOIN Hospital ON Doctor.HospitalID= Hospital.HospitalID JOIN Admin ON Hospital.AdminID= Admin.AdminID WHERE Admin.AdminID=@id GROUP BY Doctor.ConsultationFee,Appointment.AppointmentDate`;
       const parameters = [{ name: "id", type: sql.Int, value: id }];
       const result = await executeQuery(query, parameters);
       return result;
     } catch (error) {
-      console.log("Error finding hospitals", error);
       throw error;
     }
   },
@@ -54,9 +49,7 @@ const Hospital = {
   async addHospital(params) {
     const query = `INSERT INTO Hospital (AdminID, Name, Email, Website, Location, City, State, ZipCode, Contact) VALUES (@adminID, @name, @email, 
     @website, @location, @city, @state, @zipCode, @contact)`;
-    console.log(params);
     const parameters = hospitalAttributes(params);
-    console.log(parameters);
     await executeQuery(query, parameters);
     const result = await this.getAllHospital();
     return result;
@@ -75,7 +68,6 @@ const Hospital = {
       const result = await this.getAllHospital();
       return result;
     } catch (error) {
-      console.log("Error updating hospital", error);
       await transaction.rollback();
       throw error;
     }
@@ -86,10 +78,8 @@ const Hospital = {
       const query = `DELETE FROM Department WHERE HospitalID = @id`;
       const parameters = [{ name: "id", type: sql.Int, value: id }];
       await executeQuery(query, parameters);
-      console.log("reached");
       return (success = true);
     } catch (error) {
-      console.log("Error deleteing hospital", error);
       return false;
     }
   },
@@ -103,7 +93,6 @@ const Hospital = {
         return result;
       }
     } catch (error) {
-      console.log("Error deleting hospital", error);
       return false;
     }
   },

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, Badge } from "antd";
-import { useGetAppointmentsDoctorQuery } from "@/redux/services/api/doctorApi";
-import { formatTimeToAmPm } from "@/utils/utils";
 
 const AppointmentsCalendar = ({ appointments }) => {
-  const authToken = localStorage.getItem("Doctortoken");
   const [appointmentsData, setAppointmentsData] = useState({});
-  // const { data: appointments } = useGetAppointmentsDoctorQuery(authToken);
   useEffect(() => {
     // Organize appointment data into a format compatible with Ant Design Calendar
     const formattedData = {};
@@ -18,7 +14,6 @@ const AppointmentsCalendar = ({ appointments }) => {
       const dateString = `${year}-${month}-${day}`;
     
       if (!formattedData[dateString]) {
-        console.log(dateString);
         formattedData[dateString] = [];
       }
       formattedData[dateString].push(appointment);
@@ -32,7 +27,6 @@ const AppointmentsCalendar = ({ appointments }) => {
     const appointments = appointmentsData[dateString];
     return (
       <ul>
-        {/* {console.log(appointmentsData)} */}
         {appointments &&
           appointments?.map((appointment) => (
             <li key={appointment.AppointmentID}>

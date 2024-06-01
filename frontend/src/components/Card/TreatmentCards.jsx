@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import StyledCard from "@/components/Card/Card";
 import { treatmentCards } from "@/constants/constants";
-import { useGetAllPatientsQuery } from "@/redux/services/api/doctorApi";
-
-import { useGetTreatmentsByDepartmentQuery } from "@/redux/services/api/doctorApi";
-
 const TreatmentCards = ({ data }) => {
   const [treatmentData, setTreatmentData] = useState([]);
   const updateTreatmentData = async (treatment) => {
     const totalCost = treatment.reduce((acc, curr) => acc + curr["Cost"], 0);
     const totalTreatments = treatment.length;
-    const durationArray = treatment.map((item) => parseInt(item["Duration"].split(" ")[0]));  
+    const durationArray = treatment.map((item) =>
+      parseInt(item["Duration"].split(" ")[0])
+    );
     let avgDuration =
-      durationArray.reduce((acc, curr) => acc + curr, 0) /
-      durationArray.length;
-      avgDuration=avgDuration.toFixed(0)+" weeks";
+      durationArray.reduce((acc, curr) => acc + curr, 0) / durationArray.length;
+    avgDuration = avgDuration.toFixed(0) + " weeks";
     setTreatmentData([totalTreatments, totalCost, avgDuration]);
   };
 

@@ -1,4 +1,4 @@
-import { Modal, Form, message, Button } from "antd";
+import { Modal, Form, Button } from "antd";
 import { useState } from "react";
 import MedicineInfoInputs from "../InfoInputs/MedicineInfoInputs";
 import InvoiceInfoInputs from "../InfoInputs/InvoiceInfoInputs";
@@ -18,7 +18,6 @@ const HospitalModal = ({
   initialValues,
   options,
   page,
-  data,
   setModelOpen,
 }) => {
   const [formValues, setFormValues] = useState(initialValues);
@@ -40,8 +39,7 @@ const HospitalModal = ({
       setFormValues({});
       setModelOpen(false);
     } catch (error) {
-      console.log(error);
-      // message.error("Error: " + error.message);
+      message.error("Error: " + "Something went wrong");
     }
   };
 
@@ -96,7 +94,6 @@ const HospitalModal = ({
     } else if (page === "prescription") {
       return (
         <>
-          {console.log(initialValues)}
           <PrescriptionInfoInput
             data={getFormValues()}
             handleChange={updateFormValues}
@@ -138,7 +135,6 @@ const HospitalModal = ({
       <h2 className="text-2xl font-medium font-poppins text-center mb-5">
         {title}
       </h2>
-      {/* {console.log(initialValues)} */}
       <Form onFinish={handleOk}>
         {componentToShow()}
 

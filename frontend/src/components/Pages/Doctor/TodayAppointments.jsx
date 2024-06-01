@@ -37,7 +37,6 @@ const TodayAppointments = ({data,isLoading,error,isSuccess}) => {
   useEffect(() => {}, [data]);
   return (
     <>
-    {console.log(data)}
       {isSuccess && (
         <Card className="bg-white rounded-xl border-[1px] border-border p-5 xl:mt-6">
           <h2 className="font-poppins mb-6">Today Appointments</h2>

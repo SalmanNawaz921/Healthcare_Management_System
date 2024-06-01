@@ -53,7 +53,6 @@ const Invoice = {
       await executeQuery(query, parameters, transaction);
       return true;
     } catch (error) {
-      console.log("Error generating invoice", error);
       throw error;
     }
   },
@@ -70,7 +69,6 @@ const Invoice = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error paying invoice", error);
       await transaction.rollback();
       throw error;
     }
@@ -88,7 +86,6 @@ const Invoice = {
       await transaction.commit();
       return result;
     } catch (error) {
-      console.log("Error deleting Invoice", error);
       await transaction.rollback();
       throw error;
     }

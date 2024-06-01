@@ -1,8 +1,6 @@
 import { personalInfoInputs } from "@/constants/constants";
 import React from "react";
 import CommonInput from "../CommonInput/CommonInput";
-import { Form } from "antd";
-import FileUploader from "./FileUploader";
 
 const PersonalInfo = ({ purpose, data, handleChange }) => {
   return purpose !== "Edit" ? (

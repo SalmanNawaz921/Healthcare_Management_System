@@ -1,7 +1,6 @@
 import StyledCard from "@/components/Card/Card";
-import { medicineCards, patientCards } from "@/constants/constants";
+import { medicineCards } from "@/constants/constants";
 import { useMedicineCrud } from "@/hooks/useMedicineCrud";
-import { useGetAllPatientsAdminQuery } from "@/redux/services/api/hospitalAdminApi";
 import React, { useEffect, useState } from "react";
 
 const MedicineCards = () => {

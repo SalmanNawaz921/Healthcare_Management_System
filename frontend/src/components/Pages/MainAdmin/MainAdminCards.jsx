@@ -1,7 +1,6 @@
 import ChartCard from "@/components/ChartCard/ChartCard";
 import {
   useGetAllAdminsQuery,
-  useGetAllDoctorsQuery,
   useGetAllEarningsQuery,
   useGetMainAdminDoctorsQuery,
 } from "@/redux/services/api/adminApi";
@@ -51,7 +50,6 @@ const MainAdminCards = () => {
 
   return (
     <div className="w-full grid xl:grid-cols-3 gap-6 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-      {console.log(departmentEarnings?.map((item) => item.Earnings))}
       {arr.map((obj, i) => (
         <ChartCard
           title={obj?.title}
@@ -59,7 +57,7 @@ const MainAdminCards = () => {
           totalCount={obj?.count}
           data={obj?.data}
           key={obj?.title}
-          labels={ obj?.labels}
+          labels={obj?.labels}
           // label={obj.label}
         />
       ))}

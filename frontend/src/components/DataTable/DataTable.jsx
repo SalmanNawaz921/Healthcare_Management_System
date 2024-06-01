@@ -2,16 +2,13 @@ import React from "react";
 import {
   Table,
   Dropdown,
-  Menu,
   Button,
   Space,
-  message,
   Avatar,
   Tag,
 } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ConfigProvider } from "antd";
 
 const DataTable = ({ columns, data, handleClick, items, entries }) => {
@@ -19,7 +16,6 @@ const DataTable = ({ columns, data, handleClick, items, entries }) => {
 
   const handleMenuClick = (e) => {
     if (!currentRecord) return;
-    // message.info(`"Click on menu item." ${e}`);
     handleClick(currentRecord, e);
   };
 
@@ -28,7 +24,6 @@ const DataTable = ({ columns, data, handleClick, items, entries }) => {
     onClick: handleMenuClick,
   };
 
-  // const columnWidth = `${100 / columns.length}%`;
 
   const columnWidth = "200px";
 

@@ -1,8 +1,7 @@
 import Settings from "@/components/Settings/Settings";
-import PersonalInfo from "@/components/SignUp/PersonalInfo";
 import { useGetAdminDetailsQuery } from "@/redux/services/api/adminApi";
 import React, { useState } from "react";
-import { FaUserAlt, FaUserEdit, FaUserMd } from "react-icons/fa";
+import { FaUserAlt, FaUserEdit } from "react-icons/fa";
 
 const MainAdminSettings = () => {
   const authToken = localStorage.getItem("Main Admintoken");
@@ -33,7 +32,6 @@ const MainAdminSettings = () => {
   };
   return (
     <>
-      {console.log(details)}
       <Settings
         items={items}
         handleMenuClick={handleMenuClick}

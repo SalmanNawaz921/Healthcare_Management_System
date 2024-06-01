@@ -1,9 +1,6 @@
 import GenTable from "./GenTable";
 import { sortAscending, sortData, sortDescending } from "@/utils/utils";
 import { DeleteOutlined } from "@ant-design/icons";
-import { useGetAllPatientsAdminQuery } from "@/redux/services/api/hospitalAdminApi";
-import { useAppointmentCrud } from "@/hooks/useAppointmentCrud";
-import AppointmentCards from "../Card/AppointmentCards";
 import { useGetAllAdminsQuery } from "@/redux/services/api/adminApi";
 
 const AdminsTable = () => {

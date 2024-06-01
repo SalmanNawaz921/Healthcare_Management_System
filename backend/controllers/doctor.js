@@ -1,7 +1,6 @@
 const Prescription = require("../models/prescriptionModel");
 const doctor = require("../models/doctorModel");
 const patient = require("../models/patientModel");
-const treatment = require("../models/treatmentModel");
 const Patient = require("../models/patientModel");
 
 const editDetails = async (req, res) => {
@@ -9,7 +8,6 @@ const editDetails = async (req, res) => {
   try {
     const { DoctorID } = req.user;
     const params = req.body;
-    console.log(params);
     const doctors = await doctor.updateDoctor(DoctorID, params);
     success = true;
     res.status(200).json({ success, doctors });
@@ -43,7 +41,6 @@ const view_prescriptions_doctors = async (req, res) => {
 const add_prescriptions = async (req, res) => {
   try {
     const { DoctorID } = req.user;
-    console.log(DoctorID);
     const params = req.body;
     const prescriptions = await Prescription.addPrescription(params, DoctorID);
     if (prescriptions) {

@@ -1,4 +1,3 @@
-import ChartCard from "@/components/ChartCard/ChartCard";
 import SplineChart from "@/components/Charts/SplineChart";
 import DashboardWrapper from "@/components/DashboardWrapper/DashboardWrapper";
 import {
@@ -6,27 +5,19 @@ import {
   useGetHospitalEarningsQuery,
   useGetPopularDoctorsQuery,
 } from "@/redux/services/api/hospitalAdminApi";
-import {
-  allMonths,
-  calculateEarningsByMonth,
-  convertDateToMonth,
-  months,
-} from "@/utils/utils";
+import { allMonths, calculateEarningsByMonth } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
 import PopularDepartments from "./PopularDepartments";
 import PopularDoctorTable from "./PopularDoctorTable";
-import TodayAppointments from "../Doctor/TodayAppointments";
 import { useAppointmentCrud } from "@/hooks/useAppointmentCrud";
 import HospitalAdminCards from "./HospitalAdminCards";
 
 const HospitalAdminDashboard = () => {
   const { data: appointmentData } = useAppointmentCrud();
 
-  const authToken=localStorage.getItem("Hospital Admintoken");
-  const { data: hospitalEarnings } = useGetHospitalEarningsQuery(
-    authToken
-  );
-    const {
+  const authToken = localStorage.getItem("Hospital Admintoken");
+  const { data: hospitalEarnings } = useGetHospitalEarningsQuery(authToken);
+  const {
     data: details,
     isLoading: loading,
     error,
@@ -82,7 +73,12 @@ const HospitalAdminDashboard = () => {
       BottomComponent={
         <div className="">
           <h2 className="font-semibold text-xl mt-10 ml-10">Popular Doctors</h2>
-          <PopularDoctorTable details={details} loading={loading} error={error} authToken={authToken} />
+          <PopularDoctorTable
+            details={details}
+            loading={loading}
+            error={error}
+            authToken={authToken}
+          />
         </div>
       }
     />

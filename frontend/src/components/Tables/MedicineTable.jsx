@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
 import GenTable from "./GenTable";
-import { sortAscending, sortData, sortDescending } from "@/utils/utils";
+import { sortAscending, sortDescending } from "@/utils/utils";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useMedicineCrud } from "@/hooks/useMedicineCrud";
 import MedicineCards from "../Pages/HospitalAdmin/MedicineCards";
 
 const MedicineTable = () => {
-  //   const options = details?.map((details, i) => details?.["HospitalID"]);
   const authToken = localStorage.getItem("Hospital Admintoken");
   const { add, edit, remove, data, isLoading, error } = useMedicineCrud();
 
@@ -59,11 +57,9 @@ const MedicineTable = () => {
     try {
       const result = await add(formValues);
       if (result?.data?.medicines) {
-        console.log(result?.data?.medicines);
         return result?.data?.medicines;
       }
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -77,7 +73,6 @@ const MedicineTable = () => {
       const result = await remove(id);
       if (result?.medicines) return result?.medicines;
     } catch (err) {
-      console.log(err);
     }
   };
 

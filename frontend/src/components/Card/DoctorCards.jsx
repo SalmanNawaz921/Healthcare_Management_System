@@ -1,22 +1,16 @@
 import React from "react";
 import StyledCard from "./Card";
-import {
-  useGetDoctorsEarningsQuery,
-  useGetDoctorsQuery,
-} from "@/redux/services/api/hospitalAdminApi";
+import { useGetDoctorsEarningsQuery } from "@/redux/services/api/hospitalAdminApi";
 import { doctorCards } from "@/constants/constants";
 
-const DoctorCards = ({allDoctors}) => {
+const DoctorCards = ({ allDoctors }) => {
   const authToken = localStorage.getItem("Hospital Admintoken");
   const { data } = useGetDoctorsEarningsQuery(authToken);
-  // const { data: allDoctors } = useGetDoctorsQuery(authToken);
 
   const arr = [
     allDoctors?.length,
     allDoctors?.filter((d) => d.Status === "Free").length,
-    Math.floor(
-      data?.reduce((acc, cur) => acc + cur?.Earnings, 0) 
-    ),
+    Math.floor(data?.reduce((acc, cur) => acc + cur?.Earnings, 0)),
   ];
 
   return (

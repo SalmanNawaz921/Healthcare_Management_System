@@ -6,7 +6,6 @@ const Patient = require("../models/patientModel");
 const insertHospitalDetails = async (req, res) => {
   try {
     const params = req.body;
-    console.log(params);
     const hospital = await Hospital.addHospital(params);
     res.status(200).json(hospital);
   } catch (error) {
@@ -43,7 +42,6 @@ const delete_hospital = async (req, res) => {
     hospital = await Hospital.deleteHospital(req.params.id);
     res.json({ SUCCESS: "Hospital has been removed", hospital: hospital });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -51,7 +49,6 @@ const delete_hospital = async (req, res) => {
 const get_details = async (req, res) => {
   try {
     const { UserID } = req.user;
-    console.log(UserID);
     let details;
     if (UserID) {
       details = await Admin.getAdmin(UserID);
@@ -65,7 +62,6 @@ const get_details = async (req, res) => {
 const get_all_earnings = async (req, res) => {
   try {
     const { UserID } = req.user;
-    console.log(UserID);
     let details;
     if (UserID) {
       details = await Admin.getAllEarnings();
@@ -78,7 +74,6 @@ const get_all_earnings = async (req, res) => {
 const get_all_earnings_monthly = async (req, res) => {
   try {
     const { UserID } = req.user;
-    console.log(UserID);
     let details;
     if (UserID) {
       details = await Admin.getAllEarningsByMonth();
@@ -101,7 +96,6 @@ const get_all_patients_main_admin = async (req, res) => {
   try {
     let patient;
     const { id } = req.params;
-    console.log(id);
     patient = await Patient.getAllPatientsByHospital(id);
     res.status(200).json(patient);
   } catch (error) {

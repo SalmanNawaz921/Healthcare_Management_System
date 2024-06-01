@@ -42,10 +42,6 @@ const PatientsCards = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-      {console.log(
-        new Date(data?.[0]?.["AppointmentDate"]).getUTCDate(),
-        new Date().toDateString()
-      )}
       {patientCards.map((patient, i) => (
         <StyledCard
           title={patient.label}

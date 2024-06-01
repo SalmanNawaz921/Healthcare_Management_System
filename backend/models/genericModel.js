@@ -22,7 +22,6 @@ const executeQuery = async (query, parameters, transaction = null,outputColumnNa
     }
     return insertedId?insertedId:result.recordset;
   } catch (error) {
-    console.error("Error executing query:", error);
     throw error;
   }
 };

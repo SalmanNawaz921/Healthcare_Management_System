@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
 import { useEffect, useState } from "react";
-import GeneralTable from "./GeneralTable";
 import {
   useAssignDoctorMutation,
   useGetUnassignedDoctorsQuery,
@@ -8,6 +6,7 @@ import {
 import { useGetDepartmentsQuery } from "@/redux/services/api/hospitalAdminApi";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { message } from "antd";
+import GenTable from "./GenTable";
 
 const TreatmentTableForAdmin = ({ items }) => {
   const authToken = localStorage.getItem("Hospital Admintoken");
@@ -16,7 +15,7 @@ const TreatmentTableForAdmin = ({ items }) => {
     isLoading: loading,
     error,
   } = useGetUnassignedDoctorsQuery(authToken);
-  const { data: departmentData } = useGetDepartmentsQuery({authToken});
+  const { data: departmentData } = useGetDepartmentsQuery(authToken);
   const [edit, { isSuccess: isEditSuccess }] = useAssignDoctorMutation();
   const [doctorsData, setDoctorsData] = useState([]);
   const [columnsData, setColumnsData] = useState([]);
@@ -87,7 +86,6 @@ const TreatmentTableForAdmin = ({ items }) => {
   const handleEdit = async (formValues, record) => {
     const credentials = { ...formValues, DoctorID: record.DoctorID };
     const vals = { credentials, authToken };
-    console.log(vals);
     const result = await edit(vals);
     if (result) message.info("Doctor assigned successfully");
     if (result) updateDoctorData(result);
@@ -112,7 +110,7 @@ const TreatmentTableForAdmin = ({ items }) => {
 
   return (
     <>
-      <GeneralTable {...tableprops} />
+      <GenTable {...tableprops} />
     </>
   );
 };
