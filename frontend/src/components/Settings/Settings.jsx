@@ -7,9 +7,12 @@ import {
 } from "@/redux/services/api/authApi";
 import InfoComponent from "./InfoComponent";
 import FormComponent from "./FormComponent";
-import { useEditPatientDetailsMutation } from "@/redux/services/api/patientApi";
+import { useEditPatientDetailsMutation, useEditSymptomMutation } from "@/redux/services/api/patientApi";
 import DetailsComponent from "../Deatils/DetailsComponent";
-import { useDeleteDoctorMutation, useDeletePatientMutation } from "@/redux/services/api/hospitalAdminApi";
+import {
+  useDeleteDoctorMutation,
+  useDeletePatientMutation,
+} from "@/redux/services/api/hospitalAdminApi";
 
 const Settings = ({
   username,
@@ -40,8 +43,6 @@ const Settings = ({
     );
   };
 
-  
-
   const RightComponent = () => {
     let mutationHook;
     let type;
@@ -58,23 +59,36 @@ const Settings = ({
     } else if (formName === "patientInfo") {
       type = "Patient Information";
       mutationHook = useEditPatientDetailsMutation;
+    } else if (formName === "symptomsInfo") {
+      type = "Symptom Information";
+      mutationHook = useEditSymptomMutation;
     }
-    const role=localStorage.getItem("selectedRole");
+    const role = localStorage.getItem("selectedRole");
     let detetionHook;
-    let hookResult = [null, { isSuccess: false, isLoading: false, error: null }]; // Default value
-  
+    let hookResult = [
+      null,
+      { isSuccess: false, isLoading: false, error: null },
+    ]; // Default value
+
     if (role === "3") {
       detetionHook = useDeleteDoctorMutation;
     } else if (role === "4") {
       detetionHook = useDeletePatientMutation;
     }
-  
+
     if (detetionHook) {
       hookResult = detetionHook();
     }
-  
-    const [data, { isSuccess: isDeleteSuccess, isLoading: isDeleteLoading, error: deleteError }] = hookResult;
-  
+
+    const [
+      data,
+      {
+        isSuccess: isDeleteSuccess,
+        isLoading: isDeleteLoading,
+        error: deleteError,
+      },
+    ] = hookResult;
+
     const [
       userDetails,
       {
@@ -86,30 +100,38 @@ const Settings = ({
     return (
       <>
         <h1 className="text-center text-3xl mb-10 font-poppins">{type}</h1>
-          <FormComponent
-            data={userDetails}
-            // handleEdit={handleEdit}
-            type={type}
-            details={details}
-            isSuccess={isPersonalSuccess}
-            id={id} // You might need to adjust this depending on your data structure
-            deleteUser={localStorage.getItem("selectedRole") === "3" || localStorage.getItem("selectedRole")==="4" ? data : null}
-          />
+        <FormComponent
+          data={userDetails}
+          // handleEdit={handleEdit}
+          type={type}
+          details={details}
+          isSuccess={isPersonalSuccess}
+          id={id} // You might need to adjust this depending on your data structure
+          deleteUser={
+            localStorage.getItem("selectedRole") === "3" ||
+            localStorage.getItem("selectedRole") === "4"
+              ? data
+              : null
+          }
+        />
       </>
     );
   };
 
-
-  const DetailsComp=()=>{
-    return(
-      <DetailsComponent details={details} type={formName}  Component={component}/>
-    )
-  }
+  const DetailsComp = () => {
+    return (
+      <DetailsComponent
+        details={details}
+        type={formName}
+        Component={component}
+      />
+    );
+  };
 
   return (
     <DetailsWrapper
       LeftComponent={LeftComponent}
-      RightComponent={noShow ?DetailsComp:RightComponent}
+      RightComponent={noShow ? DetailsComp : RightComponent}
     />
   );
 };

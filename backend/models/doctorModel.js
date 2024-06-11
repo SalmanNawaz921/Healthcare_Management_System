@@ -86,7 +86,7 @@ const Doctor = {
   },
 
   async getAllDoctorsPatient(patientID, transaction = null) {
-    const query = `SELECT Appointment.AppointmentDate,FORMAT(Appointment.AppointmentDate, 'hh:mm tt') AS [AppointmentTime],DATEDIFF(HOUR,GETDATE(),Appointment.AppointmentDate) AS [HourDifference],CONCAT (Person.FirstName,' ',Person.LastName) As [Full Name],Person.Contact,Person.Email,l.Value As Gender, s.Value AS [AppointmentStatus] FROM Patient JOIN Appointment ON Appointment.PatientID = Patient.PatientID JOIN DOCTOR ON Doctor.DoctorID = Appointment.DoctorID JOIN Person ON Doctor.DoctorID = Person.UserID JOIN Hospital ON Hospital.HospitalID =Patient.HospitalID JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup s on s.Id = Appointment.AppointmentStatus  Where Patient.PatientID=@patientID ;
+    const query = `SELECT Appointment.AppointmentID,Appointment.AppointmentDate,FORMAT(Appointment.AppointmentDate, 'hh:mm tt') AS [AppointmentTime],DATEDIFF(HOUR,GETDATE(),Appointment.AppointmentDate) AS [HourDifference],CONCAT (Person.FirstName,' ',Person.LastName) As [Full Name],Person.Contact,Person.Email,l.Value As Gender, s.Value AS [AppointmentStatus] FROM Patient JOIN Appointment ON Appointment.PatientID = Patient.PatientID JOIN DOCTOR ON Doctor.DoctorID = Appointment.DoctorID JOIN Person ON Doctor.DoctorID = Person.UserID JOIN Hospital ON Hospital.HospitalID =Patient.HospitalID JOIN Lookup l ON l.Id = Person.Gender JOIN Lookup s on s.Id = Appointment.AppointmentStatus  Where Patient.PatientID=@patientID ;
     `;
     const parameters = [{ name: "patientID", type: sql.Int, value: patientID }];
     const result = await executeQuery(query, parameters, transaction);

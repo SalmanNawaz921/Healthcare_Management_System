@@ -69,12 +69,10 @@ const DepartmentTable = () => {
     columnsToFilter: ["HospitalID", "Hospital Name"],
     handleAdd: handleAdd,
     handleEdit: handleEdit,
-    keyToDelete: "DepartmentID",
     handleDelete: handleDelete,
     page: "department",
     details: data || null,
     keyToView: "DepartmentID",
-    //    columnsToFilter: [""],
   };
 
   return (

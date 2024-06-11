@@ -1,18 +1,10 @@
-import {
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import SignUp from "./components/SignUp/SignUp";
 import Login from "./components/Login/Login";
 import AlertState from "./context/AlertContext/AlertState";
 import AlertDialog from "./components/Alert/AlertDialog";
-import {
-  userComponents,
-  users,
-  userOptions,
-} from "./constants/constants";
-import { useContext } from "react";
+import { userComponents, users, userOptions } from "./constants/constants";
+import React,{ useContext } from "react";
 import roleContext from "./context/RoleContext/roleContext";
 const App = () => {
   const isAuthenticated = () => {
@@ -21,7 +13,7 @@ const App = () => {
     if (!user) {
       return false;
     } // Return false if user is not found
-    
+
     const authToken = localStorage.getItem(`${user.name}token`);
     return !!authToken; // Convert authToken to a boolean value
   };
@@ -35,32 +27,32 @@ const App = () => {
         ))}
 
         {/* For The Routing of Users */}
-        {users.map((user) => {
+        {users.map((user, userIndex) => {
           const userName = user.name.replace(" ", "");
           const smallUserName = userName.toLowerCase();
           const CapitalizedUserName = userComponents[smallUserName];
           return (
-            <>
-              {userOptions[smallUserName]?.map((option, i) =>
+            <React.Fragment key={userIndex}>
+              {userOptions[smallUserName]?.map((option, optionIndex) =>
                 [
                   `/${smallUserName}/:username`,
                   `/${smallUserName}/:username/${option.label.toLowerCase()}`,
                   `/${smallUserName}/:username/${option.label.toLowerCase()}/:id`,
-                ].map((path, i) => (
+                ].map((path, pathIndex) => (
                   <Route
-                    key={i}
+                    key={`${userIndex}-${optionIndex}-${pathIndex}`}
                     path={path}
                     element={
                       isAuthenticated() ? (
                         <CapitalizedUserName />
                       ) : (
-                        <Navigate to="/" /> // Redirect unauthorized users to the login page
+                        <Navigate to="/" />
                       )
                     }
                   />
                 ))
               )}
-            </>
+            </React.Fragment>
           );
         })}
         <Route path="/signup" element={<SignUp />} />

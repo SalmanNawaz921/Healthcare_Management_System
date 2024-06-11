@@ -102,7 +102,6 @@ const TreatmentTableForAdmin = ({ items }) => {
     keyToSearch: "Name" || null,
     tableTitle: "Doctor",
     items: opts,
-    tableTitle: "Unassign",
     handleEdit: handleEdit,
     page: "unassign",
     options: options,

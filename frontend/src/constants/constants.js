@@ -118,7 +118,7 @@ export const userComponents = {
 };
 
 export const doctorInputs = (options) => {
-  return[
+  return [
     {
       value: 1,
       label: "Qualification",
@@ -172,7 +172,7 @@ export const doctorInputs = (options) => {
       type: "select",
       validationfn: "",
       require: true,
-      options:options
+      options: options,
     },
   ];
 };
@@ -349,14 +349,6 @@ export const petientInfoInputs = (options) => {
   return [
     {
       value: 1,
-      label: "Description",
-      name: "Description",
-      type: "textarea",
-      validationfn: "",
-      require: true,
-    },
-    {
-      value: 2,
       label: "AliveStatus",
       name: "AliveStatus",
       type: "radio",
@@ -368,7 +360,7 @@ export const petientInfoInputs = (options) => {
       require: true,
     },
     {
-      value: 3,
+      value: 2,
       label: "MedicalHistory",
       name: "MedicalHistory",
       type: "textarea",
@@ -376,7 +368,7 @@ export const petientInfoInputs = (options) => {
       require: true,
     },
     {
-      value: 4,
+      value: 3,
       label: "Weight",
       name: "Weight",
       type: "text",
@@ -385,7 +377,7 @@ export const petientInfoInputs = (options) => {
       require: false,
     },
     {
-      value: 5,
+      value: 4,
       label: "BloodPressure",
       name: "BloodPressure",
       type: "text",
@@ -394,7 +386,7 @@ export const petientInfoInputs = (options) => {
       require: false,
     },
     {
-      value: 6,
+      value: 5,
       label: "Height",
       name: "Height",
       type: "text",
@@ -403,7 +395,7 @@ export const petientInfoInputs = (options) => {
       require: false,
     },
     {
-      value: 7,
+      value: 6,
       label: "Allergies",
       name: "Allergies",
       type: "text",
@@ -413,7 +405,7 @@ export const petientInfoInputs = (options) => {
     },
 
     {
-      value: 8,
+      value: 7,
       label: "BloodType",
       name: "BloodType",
       type: "text",
@@ -423,7 +415,7 @@ export const petientInfoInputs = (options) => {
     },
 
     {
-      value: 9,
+      value: 8,
       label: "Hospital Name",
       name: "HospitalID",
       type: "select",
@@ -433,6 +425,25 @@ export const petientInfoInputs = (options) => {
     },
   ];
 };
+
+export const symptomInputs = [
+  {
+    value: 1,
+    label: "Symptom Name",
+    name: "SymptomName",
+    type: "text",
+    validationfn: "",
+    require: true,
+  },
+  {
+    value: 2,
+    label: "Description",
+    name: "Description",
+    type: "textarea",
+    validationfn: "",
+    require: true,
+  },
+];
 
 export const columns = [
   {

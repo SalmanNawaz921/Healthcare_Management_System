@@ -47,12 +47,12 @@ const PatientSettings = ({username}) => {
       handleMenuClick={handleMenuClick}
       formName={formName}
       details={details}
-      fullName={details?.["FirstName"].concat(" ", details?.["LastName"])}
-      email={details?.["Email"]}
-      phoneno={details?.["Contact"]}
-      username={details?.Username}
-      id={details?.PatientID}
-      img={details?.["Img"]}
+      fullName={details?.[0]?.["FirstName"].concat(" ", details?.[0]["LastName"])}
+      email={details?.[0]?.["Email"]}
+      phoneno={details?.[0]?.["Contact"]}
+      username={details?.[0]?.Username}
+      id={details?.[0]?.PatientID}
+      img={details?.[0]?.["Img"]}
     />
   );
 };

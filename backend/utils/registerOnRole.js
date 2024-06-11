@@ -88,7 +88,6 @@ async function registerPatient(param) {
     param.Gender,
     param.DateofBirth,
     param.role,
-    param.Description,
     param?.["AliveStatus"],
     param?.["MedicalHistory"],
     param?.["HospitalID"]

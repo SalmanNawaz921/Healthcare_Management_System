@@ -1,15 +1,16 @@
-import { Modal, Form, Button } from "antd";
+import { Modal, Form, Button, message } from "antd";
 import { useState } from "react";
 import MedicineInfoInputs from "../InfoInputs/MedicineInfoInputs";
 import InvoiceInfoInputs from "../InfoInputs/InvoiceInfoInputs";
 import AppointmentInfoInputs from "../InfoInputs/AppointmentInfoInputs";
 import TreatmentInfoInputs from "../InfoInputs/TreatmentInfoInputs";
 import CommonInput from "../CommonInput/CommonInput";
-import { assignDoctor } from "@/constants/constants";
+import { assignDoctor, symptomInputs } from "@/constants/constants";
 import DepartmentInfoInputs from "../InfoInputs/DepartmentInfoInputs";
 import PrescriptionInfoInput from "../InfoInputs/PrescriptionInfoInput";
 import AddHospital from "../Hospital/AddHospital";
 import { useGetDepartmentsQuery } from "@/redux/services/api/hospitalAdminApi";
+import SymptomInfoInputs from "../InfoInputs/SymptomInfoInputs";
 const HospitalModal = ({
   title,
   visible,
@@ -34,22 +35,21 @@ const HospitalModal = ({
   };
 
   const handleOk = async () => {
+    console.log("formValues",formValues)  
     try {
       await onOk(formValues);
       setFormValues({});
       setModelOpen(false);
     } catch (error) {
-      message.error("Error: " + "Something went wrong");
+      console.log("error",error)
+      message.error("Error: " + error);
     }
   };
 
   const componentToShow = () => {
     if (page === "hospital") {
       return (
-        <AddHospital
-          data={getFormValues()}
-          handleChange={updateFormValues}
-        />
+        <AddHospital data={getFormValues()} handleChange={updateFormValues} />
       );
     } else if (page === "department") {
       return (
@@ -59,6 +59,20 @@ const HospitalModal = ({
           options={options || []}
         />
       );
+    } else if (page === "symptom") {
+      return symptomInputs.map((input) => (
+        <CommonInput
+          key={input.value}
+          label={input.label}
+          name={input.name}
+          type={input.type}
+          validationfn={input.validationfn}
+          value={getFormValues()?.[input.name]}
+          required={input.require}
+          handleChange={updateFormValues}
+          data={getFormValues()}
+        />
+      ));
     } else if (page === "medicine") {
       return (
         <MedicineInfoInputs
@@ -105,7 +119,11 @@ const HospitalModal = ({
       const { data } = useGetDepartmentsQuery(
         localStorage.getItem("Hospital Admintoken")
       );
-      const assignOptions = data?.map((item)=>({label:item.Name,value:item.DepartmentID,key:item.DepartmentID}));
+      const assignOptions = data?.map((item) => ({
+        label: item.Name,
+        value: item.DepartmentID,
+        key: item.DepartmentID,
+      }));
       const assignAttributes = assignDoctor(assignOptions);
       return (
         <CommonInput

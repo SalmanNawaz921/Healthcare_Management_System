@@ -16,6 +16,27 @@ const Patient = {
     }
   },
 
+  async editSymptom(parameters, id,patientID) {
+    const pool = await getData();
+    const transaction = pool.transaction();
+    try {
+      await transaction.begin();
+      const query = `UPDATE PatientSymptoms SET Description = COALESCE(@description,Description), SymptomName = COALESCE(@symptomName,SymptomName), DateRecorded = COALESCE(GETDATE(),DateRecorded)  WHERE SymptomID = @id`;
+      const params=[
+        { name: "id", type: sql.Int, value: id },
+        { name: "description", type: sql.VarChar, value: parameters.Description },
+        { name: "symptomName", type: sql.VarChar, value: parameters.SymptomName },
+      ]
+      await executeQuery(query, params, transaction);
+      const result = await this.getPatient(patientID,transaction);
+      await transaction.commit();
+      return result;
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  },
+
   async getAllPatientsByAdmin(id, transaction = null) {
     try {
       const query = `SELECT Patient.PatientID,CONCAT (Person.FirstName,' ',Person.LastName) As [Full Name], Person.Contact, Person.Email, DATEDIFF(YEAR,Person.DateOfBirth,GETDATE()) As Age,Lookup.Value As Gender, Appointment.AppointmentDate AS [Visit Date] FROM Patient JOIN Person ON Patient.PatientID = Person.UserID JOIN Appointment ON Appointment.PatientID = Patient.PatientID JOIN Doctor ON Doctor.DoctorID = Appointment.DoctorID JOIN PatientSymptoms ON PatientSymptoms.PatientID= Patient.PatientId  JOIN DoctorDepartmentAssignment ON Doctor.DoctorID=DoctorDepartmentAssignment.DoctorID JOIN Department ON Department.DepartmentID = DoctorDepartmentAssignment.DepartmentID JOIN Hospital ON Hospital.HospitalID = Department.HospitalID  JOIN Lookup ON Lookup.Id = Person.Gender JOIN Admin ON Admin.AdminID = Hospital.AdminID Where Admin.AdminID=@id ;
@@ -62,10 +83,10 @@ const Patient = {
 
   async getPatient(id, transaction = null) {
     const query =
-      "SELECT Patient.PatientID,Patient.Weight,Patient.BloodPressure,Patient.Height,Patient.Allergies,Patient.AliveStatus,Patient.BloodType,Patient.MedicalHistory,Patient.HospitalID, Person.*,PatientSymptoms.SymptomName,PatientSymptoms.DateRecorded,PatientSymptoms.Description,Users.Username,PrescrIption.*,Appointment.AppointmentDate,Appointment.DoctorID FROM Patient JOIN Person ON Person.UserID= Patient.PatientID JOIN PatientSymptoms ON PatientSymptoms.PatientID = Patient.PatientID JOIN Prescription ON Prescription.SymptomID = PatientSymptoms.SymptomID JOIN Appointment ON Appointment.PatientID = Patient.PatientID  JOIN Users ON Users.UserID = Patient.PatientID WHERE Patient.PatientID =  @id";
+      "  SELECT Patient.PatientID,Patient.Weight,Patient.BloodPressure,Patient.Height,Patient.Allergies,Patient.AliveStatus,Patient.BloodType,Patient.MedicalHistory,Patient.HospitalID, Person.*,PatientSymptoms.SymptomName,PatientSymptoms.SymptomID,PatientSymptoms.DateRecorded,PatientSymptoms.[Description],Users.Username,PrescrIption.Diagnosis,Prescription.TreatmentPlan,Prescription.PrescriptionID,Prescription.Advice,Prescription.CaseType,Prescription.DateStarted,Appointment.AppointmentDate,Appointment.DoctorID FROM Patient JOIN Person ON Person.UserID= Patient.PatientID JOIN PatientSymptoms ON PatientSymptoms.PatientID = Patient.PatientID JOIN Prescription ON Prescription.SymptomID = PatientSymptoms.SymptomID JOIN Appointment ON Appointment.PatientID = Patient.PatientID  JOIN Users ON Users.UserID = Patient.PatientID WHERE Patient.PatientID =@id AND Appointment.AppointmentStatus=18 ";
     const parameters = [{ name: "id", type: sql.Int, value: id }];
     const result = await executeQuery(query, parameters, transaction);
-    return result != null && result.length > 0 ? result[0] : null;
+    return result;
   },
 
   async getPatientSymptoms(id, transaction = null) {
@@ -136,14 +157,9 @@ const Patient = {
         transaction
       );
 
-      const patientSymptoms = await this.insertPatientSymptoms(
-        patient.PatientID,
-        description,
-        transaction
-      );
+  
       const personid = patient.PersonID;
       const patientid = patient.PatientID;
-      const symptomsId = patientSymptoms.SymptomsID;
       const query =
         "SELECT Users.UserName, Users.UserID, Person.Email, CONCAT (Person.FirstName,' ',Person.LastName) AS Name, Patient.MedicalHistory, Patient.AliveStatus,PatientSymptoms.Description AS Symptoms FROM Patient JOIN Person ON Person.UserID = @personid JOIN Users ON Users.UserID = @userId LEFT JOIN PatientSymptoms ON PatientSymptoms.PatientID = @patientId WHERE Patient.PatientID=@patientid AND PatientSymptoms.PatientID=@patientid";
       const parameters = [
@@ -183,13 +199,14 @@ const Patient = {
     }
   },
 
-  async insertPatientSymptoms(patientID, description, transaction) {
+  async insertPatientSymptoms(patientID, description,symptomName, transaction=null) {
     try {
       const query =
-        "INSERT INTO PatientSymptoms (PatientID,Description,DateRecorded) VALUES (@patientID,@description,SYSDATETIME())";
+        "INSERT INTO PatientSymptoms (PatientID,SymptomName,Description,DateRecorded) VALUES (@patientID,@symptomName,@description,GETDATE())";
       const parameters = [
         { name: "patientID", type: sql.Int, value: patientID },
         { name: "description", type: sql.VarChar, value: description },
+        { name: "symptomName", type: sql.VarChar, value:symptomName  },
       ];
       await executeQuery(query, parameters, transaction);
       const result = await this.getPatientSymptoms(patientID, transaction);

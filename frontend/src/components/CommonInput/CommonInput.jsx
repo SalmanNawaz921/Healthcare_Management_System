@@ -208,7 +208,7 @@ const CommonInput = ({
       }
 
       case "textarea": {
-        return <TextArea rows={4} onChange={setChange} />;
+        return <TextArea rows={4} onChange={setChange} {...rest}/>;
       }
       case "radio": {
         return (

@@ -7,7 +7,6 @@ const PatientInfo = ({ data, handleChange,purpose }) => {
   const {data:details}=useViewHospitalsQuery();
   const options=details?.map((item)=>({label:item.Name,value:item.HospitalID}))
   const patientInfpInputs = petientInfoInputs(options);
-  console.log(patientInfpInputs);
   return (
     <div>
       {patientInfpInputs.map((input) => {
@@ -29,7 +28,7 @@ const PatientInfo = ({ data, handleChange,purpose }) => {
             />
           );
         }
-        else if(purpose==="Edit"){
+        else if(purpose==="Edit" && input.label!=="Description"){
           return (
             <CommonInput
               key={input.value}

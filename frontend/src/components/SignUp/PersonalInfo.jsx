@@ -9,7 +9,7 @@ const PersonalInfo = ({ purpose, data, handleChange }) => {
         .filter((input) => input.required !== false)
         .map((input, i) => (
           <CommonInput
-            key={input.value}
+            key={i}
             label={input.label}
             name={input.name}
             type={input.type}
@@ -27,7 +27,7 @@ const PersonalInfo = ({ purpose, data, handleChange }) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
       {personalInfoInputs.map((input, i) => (
         <CommonInput
-          key={input.value}
+          key={i}
           label={input.label}
           name={input.name}
           type={input.type}

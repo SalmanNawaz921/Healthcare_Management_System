@@ -93,8 +93,8 @@ const get_doctor_earnings = async (req, res) => {
 
 const get_patient_symptoms = async (req, res) => {
   try {
-    const { id } = req.params;
-    const symptoms = await patient.getPatientSymptoms(id);
+    const { PatientID } = req.user;
+    const symptoms = await patient.getPatientSymptoms(PatientID);
     res.status(200).json(symptoms);
   } catch (error) {
     res.status(400).json({ msg: error.message });

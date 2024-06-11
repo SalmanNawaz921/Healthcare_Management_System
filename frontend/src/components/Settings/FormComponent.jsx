@@ -6,9 +6,16 @@ import { DeleteOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import DoctorInfo from "../Doctor/DoctorInfo";
 import PatientInfo from "../Patient/PatientInfo";
 import { useNavigate } from "react-router-dom";
+import SymptomInfoInputs from "../InfoInputs/SymptomInfoInputs";
 
 const FormComponent = ({ data, type, id, details, deleteUser }) => {
-  const [formValues, setFormValues] = useState(details ? details : []);
+  const [formValues, setFormValues] = useState(
+    localStorage.getItem("selectedRole") === "4"
+      ? details
+        ? details?.[0]
+        : []
+      : details
+  );
   const updateFormValues = (name, value) => {
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -54,6 +61,14 @@ const FormComponent = ({ data, type, id, details, deleteUser }) => {
             data={formValues}
           />
         );
+      case "Symptom Information":
+        return (
+          <SymptomInfoInputs
+            purpose="Edit"
+            handleChange={updateFormValues}
+            data={details}
+          />
+        );
       default:
         return (
           <PersonalInfo
@@ -80,7 +95,7 @@ const FormComponent = ({ data, type, id, details, deleteUser }) => {
       if (result?.data?.success === true) {
         useNavigate("/login");
         message.success(`Success! ${type} deleted successfully`);
-      } 
+      }
     } catch (error) {
       message.error("Error: User cannot be deleted");
     }
@@ -96,7 +111,8 @@ const FormComponent = ({ data, type, id, details, deleteUser }) => {
       } else if (type === "Patient Information")
         authToken = localStorage.getItem("Patienttoken");
       if (authToken) {
-        const params = { credentials, authToken };
+        let params;
+        params = { credentials, authToken };
         result = await data(params);
       } else {
         const params = { credentials, id };
@@ -105,40 +121,47 @@ const FormComponent = ({ data, type, id, details, deleteUser }) => {
 
       if (result?.data?.success === true) {
         message.success(`Success! ${type} updated successfully`);
-      } 
+      }
     } catch (error) {
       message.error("Error: User cannot be updated");
     }
   };
 
+  if(type==="Symptom Information") return <SymptomInfoInputs data={details}/>;
+
   return (
     <Form onFinish={handleEdit}>
       {renderInputComponent()}
-      <div className={`${deleteUser?"grid grid-cols-1 sm:grid-cols-2 gap-4":""} w-full`}>
+      <div
+        className={`${
+          deleteUser ? "grid grid-cols-1 sm:grid-cols-2 gap-4" : ""
+        } w-full`}
+      >
         {deleteUser && (
-            <Form.Item>
-              <Button
-                className="btn-danger"
-                htmlType="submit"
-                size="large"
-                icon={<DeleteOutlined />}
-                onClick={handleDelete}
-              >
-                Delete Account
-              </Button>
-            </Form.Item>
-          )}
-
-        <Form.Item>
-          <Button
-            className="btn-save"
-            htmlType="submit"
-            size="large"
-            icon={<CheckCircleOutlined />}
-          >
-            Save Changes
-          </Button>
-        </Form.Item>
+          <Form.Item>
+            <Button
+              className="btn-danger"
+              htmlType="button"
+              size="large"
+              icon={<DeleteOutlined />}
+              onClick={handleDelete}
+            >
+              Delete Account
+            </Button>
+          </Form.Item>
+        )}
+        
+          <Form.Item>
+            <Button
+              className="btn-save"
+              htmlType="submit"
+              size="large"
+              icon={<CheckCircleOutlined />}
+            >
+              Save Changes
+            </Button>
+          </Form.Item>
+        
       </div>
     </Form>
   );

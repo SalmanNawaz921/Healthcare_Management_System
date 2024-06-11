@@ -16,6 +16,7 @@
     "antd": "^5.16.1",
     "chart.js": "^4.4.2",
     "concurrently": "^8.2.2",
+    "dayjs": "^1.11.11",
     "js-cookie": "^3.0.5",
     "mssql": "^10.0.2",
     "nodemon": "^3.1.0",
