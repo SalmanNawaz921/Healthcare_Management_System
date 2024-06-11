@@ -24,7 +24,7 @@ export const patientApi = hmsApi.injectEndpoints({
     addSymptom: builder.mutation({
       query: (params) => ({
         url: `/patient/addSymptom`,
-        method: "PUT",
+        method: "POST",
         headers: {
           "auth-token": `${params.authToken}`,
         },
@@ -39,6 +39,15 @@ export const patientApi = hmsApi.injectEndpoints({
           "auth-token": `${params.authToken}`,
         },
         body: params.credentials,
+      }),
+    }),
+    deleteSymptom: builder.mutation({
+      query: (params) => ({
+        url: `/patient/deleteSymptom/${params.id}`,
+        method: "DELETE",
+        headers: {
+          "auth-token": `${params.authToken}`,
+        },
       }),
     }),
 
@@ -111,5 +120,6 @@ export const {
   usePayInvoiceMutation,
   useGetSymptomsQuery,
   useEditSymptomMutation,
-  useAddSymptomMutation
+  useAddSymptomMutation,
+  useDeleteSymptomMutation
 } = patientApi;

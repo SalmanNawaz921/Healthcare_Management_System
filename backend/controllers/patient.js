@@ -113,6 +113,23 @@ const add_symptom=async(req,res)=>{
   }
 }
 
+const delete_symptom=async(req,res)=>{
+  try{
+    const {PatientID}=req.user;
+    const {id}=req.params;
+    console.log(req)
+    const symptom=await Patient.deletePatientSymptom(id,PatientID);
+    if(symptom){
+      res.status(200).json(symptom);
+    }else{
+      res.status(400).json({msg:"Error Deleting Symptom"});
+    }
+  }catch(error){
+    res.status(400).json({msg:"Error Deleting Symptom"});
+  }
+
+}
+
 module.exports = {
   get_details_patient,
   book_appointment,
@@ -120,5 +137,6 @@ module.exports = {
   pay_invoice,
   edit_details_patient,
   edit_patient_symptom,
-  add_symptom
+  add_symptom,
+  delete_symptom
 };

@@ -28,7 +28,7 @@ const Patient = {
         { name: "symptomName", type: sql.VarChar, value: parameters.SymptomName },
       ]
       await executeQuery(query, params, transaction);
-      const result = await this.getPatient(patientID,transaction);
+      const result = await this.getPatientSymptoms(patientID,transaction);
       await transaction.commit();
       return result;
     } catch (error) {
@@ -212,6 +212,23 @@ const Patient = {
       const result = await this.getPatientSymptoms(patientID, transaction);
       return result;
     } catch (error) {
+      throw error;
+    }
+  },
+
+  async deletePatientSymptom(id, patientID) {
+    const pool = await getData();
+    const transaction = pool.transaction();
+    try {
+      await transaction.begin();
+      const query = `DELETE FROM PatientSymptoms WHERE SymptomID = @id`;
+      const parameters = [{ name: "id", type: sql.Int, value: id }];
+      await executeQuery(query, parameters, transaction);
+      const result = await this.getPatientSymptoms(patientID, transaction);
+      await transaction.commit();
+      return result;
+    } catch (error) {
+      await transaction.rollback();
       throw error;
     }
   },
