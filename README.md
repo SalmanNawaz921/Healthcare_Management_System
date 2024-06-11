@@ -1,8 +1,8 @@
-# Healthcare Management System
+# HealthPulse
 
 ## Overview
 
-The Healthcare Management System is a comprehensive solution designed to streamline various healthcare-related tasks and information management. It provides an efficient and user-friendly interface for managing patient information, appointments, medical records, and other essential healthcare operations. This project leverages modern web technologies to deliver a robust and scalable application.
+Healthcare Management System is a comprehensive solution designed to streamline various healthcare-related tasks and information management. It provides an efficient and user-friendly interface for managing patient information, appointments, medical records, and other essential healthcare operations. This project leverages modern web technologies to deliver a robust and scalable application.
 
 ## Technologies Used
 
