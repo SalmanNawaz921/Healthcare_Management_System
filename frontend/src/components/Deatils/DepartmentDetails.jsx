@@ -10,6 +10,7 @@ import {
 } from "@/redux/services/api/departmentApi";
 import PatientsTable from "../Tables/PatientsTable";
 import TreatmentTable from "../Tables/TreatmentTable";
+import { FaClinicMedical, FaUserMd } from "react-icons/fa";
 
 const DepartmentDetails = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const DepartmentDetails = () => {
     },
     {
       key: "Treatments",
-      icon: <FaUserMd />,
+      icon: <FaClinicMedical />,
       label: "Treatments",
     },
   ];

@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("./db/db");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { view_all_hospitals } = require("./controllers/fetchList");
 dotenv.config({
   path: "./.env", //give .env file location
 });
@@ -10,15 +9,6 @@ dotenv.config({
 const app = express();
 app.use(cors());
 
-
-app.use("/", (req, res) => {
-  res.send("Welcome To HMS!")
-});
-
-// Define a route to handle requests for data
-app.use("/api/hospitals", (req, res) => {
-  res.send(view_all_hospitals)
-});
 app.use("/api/auth", require("./routes/auth/auth"), (req, res) => {
   res.send("Hello");
 });

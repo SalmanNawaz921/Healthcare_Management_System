@@ -35,15 +35,16 @@ const PatientDetails = ({authToken}) => {
   };
   return (
     <>
+    {console.log(details)}
       <Settings
-        fullName={details?.FirstName.concat(" ", details?.LastName)}
-        email={details?.["Email"]}
-        phoneno={details?.["Contact"]}
+        fullName={details?.[0]?.FirstName.concat(" ", details?.[0]?.LastName)}
+        email={details?.[0]?.["Email"]}
+        phoneno={details?.[0]?.["Contact"]}
         items={items}
         handleMenuClick={handleMenuClick}
-        img={details?.["Img"]}
+        img={details?.[0]?.["Img"]}
         noShow={true}
-        details={details}
+        details={details?.[0]}
         formName={formName}
       />
       ;
