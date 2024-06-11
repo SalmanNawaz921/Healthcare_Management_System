@@ -129,7 +129,7 @@ const edit_treatment = async (req, res) => {
 };
 
 const delete_treatment = async (req, res) => {
-  try {
+  // try {
     let treatment = await Treatment.findById(req.params.id);
     if (!treatment) {
       return res.status(404).send({ message: "Treatment not found" });
@@ -137,9 +137,9 @@ const delete_treatment = async (req, res) => {
     const { AdminID } = req.user;
     treatment = await Treatment.deleteTreatment(req.params.id, AdminID);
     res.json({ success: true, treatments: treatment });
-  } catch (err) {
-    res.status(500).json({ error: "Internal Error" });
-  }
+  // } catch (err) {
+  //   res.status(500).json({ error: "Internal Error" });
+  // }
 };
 
 const add_medicine = async (req, res) => {
