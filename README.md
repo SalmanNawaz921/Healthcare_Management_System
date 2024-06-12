@@ -61,7 +61,7 @@ Make sure you have the following installed on your machine:
 
 1. **Configure the database**:
     - Set up a new database in Microsoft SQL Server.
-    - Update the database configuration in `server/config/db.config.js` with your SQL Server connection details.
+    - Update the database configuration in `backend/db/dbConfig.js` with your SQL Server connection details.
 
 2. **Environment variables for backend**:
     - Create a `.env` file in the `backend` directory.
