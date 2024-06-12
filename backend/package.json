@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "serve": "nodemon index.js",
-    "start": "node index.js",
+    "start": "node init && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./ -d dist"
-
+    "build": "node init && babel ./ -d dist"
   },
   "keywords": [],
   "author": "",
