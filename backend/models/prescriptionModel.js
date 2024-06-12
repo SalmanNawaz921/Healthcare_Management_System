@@ -71,13 +71,16 @@ const Prescription = {
         "prescriptionid"
       );
 
-      await this.addPatientMedicine(params, result, transaction);
-
-      const patient = await Patient.findPatientSymptomById(
-        params.SymptomID,
-        transaction
-      );
-      const patientID = patient?.PatientID[0];
+      if (params.MedicineID)
+        await this.addPatientMedicine(params, result, transaction);
+      let patient, patientID;
+      if (params.SymptomID) {
+        patient = await Patient.findPatientSymptomById(
+          params.SymptomID,
+          transaction
+        );
+        patientID = patient?.PatientID[0];
+      }
       query = `UPDATE Appointment SET AppointmentStatus = 19 FROM Appointment JOIN PatientSymptoms ON PatientSymptoms.SymptomID= ${params.SymptomID} WHERE PatientSymptoms.SymptomID= ${params.SymptomID}`;
       await executeQuery(query, [], transaction);
       let cost = 0;
